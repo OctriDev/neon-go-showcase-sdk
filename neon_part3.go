@@ -364,7 +364,7 @@ func NewConsumptionNamespace(config ClientConfig) *ConsumptionNamespace {
 //	comma-separated list in a single parameter value. - As an array of parameter
 //	values: `metrics=cpu_seconds&metrics=ram_bytes` - As a comma-separated list
 //	in a single parameter value: `metrics=cpu_seconds,ram_bytes`
-func (sdk *ConsumptionNamespace) GetHistoryPerProject(ctx context.Context, params GetConsumptionHistoryPerProjectParams, opts ...RequestOption) (any, error) {
+func (sdk *ConsumptionNamespace) GetHistoryPerProject(ctx context.Context, params GetConsumptionHistoryPerProjectParams, opts ...RequestOption) (*GetConsumptionHistoryPerProjectResponse, error) {
 	return GetConsumptionHistoryPerProject(ctx, sdk.config, params, opts...)
 }
 
@@ -414,7 +414,7 @@ func (sdk *ConsumptionNamespace) GetHistoryPerProject(ctx context.Context, param
 //	comma-separated list: -
 //	`project_ids=cold-poetry-09157238&project_ids=quiet-snow-71788278` -
 //	`project_ids=cold-poetry-09157238,quiet-snow-71788278`
-func (sdk *ConsumptionNamespace) GetHistoryPerProjectV2(ctx context.Context, params GetConsumptionHistoryPerProjectV2Params, opts ...RequestOption) (any, error) {
+func (sdk *ConsumptionNamespace) GetHistoryPerProjectV2(ctx context.Context, params GetConsumptionHistoryPerProjectV2Params, opts ...RequestOption) (*GetConsumptionHistoryPerProjectV2Response, error) {
 	return GetConsumptionHistoryPerProjectV2(ctx, sdk.config, params, opts...)
 }
 
@@ -470,7 +470,7 @@ func (sdk *ConsumptionNamespace) GetHistoryPerProjectV2(ctx context.Context, par
 //	as repeated query parameters or a comma-separated list: -
 //	`branch_ids=br-aged-salad-637688&branch_ids=br-sweet-breeze-497520` -
 //	`branch_ids=br-aged-salad-637688,br-sweet-breeze-497520`
-func (sdk *ConsumptionNamespace) GetHistoryPerBranchV2(ctx context.Context, params GetConsumptionHistoryPerBranchV2Params, opts ...RequestOption) (any, error) {
+func (sdk *ConsumptionNamespace) GetHistoryPerBranchV2(ctx context.Context, params GetConsumptionHistoryPerBranchV2Params, opts ...RequestOption) (*GetConsumptionHistoryPerBranchV2Response, error) {
 	return GetConsumptionHistoryPerBranchV2(ctx, sdk.config, params, opts...)
 }
 
@@ -566,7 +566,7 @@ func (sdk *OrganizationsNamespace) DeleteSpendingLimit(ctx context.Context, para
 //	fetch next page of the list.
 //	sortOrder: Defines the sorting order of entities.
 //	limit: The maximum number of members to return in the response
-func (sdk *OrganizationsNamespace) ListMembers(ctx context.Context, params ListOrganizationsMembersParams, opts ...RequestOption) (any, error) {
+func (sdk *OrganizationsNamespace) ListMembers(ctx context.Context, params ListOrganizationsMembersParams, opts ...RequestOption) (*ListOrganizationsMembersResponse, error) {
 	return ListOrganizationsMembers(ctx, sdk.config, params, opts...)
 }
 

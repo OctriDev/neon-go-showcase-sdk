@@ -57,7 +57,7 @@ type ListOperationParams struct {
 //	batch of operations
 //	limit: Specify a value from 1 to 1000 to limit number of operations in the
 //	response
-func ListOperation(ctx context.Context, clientConfig ClientConfig, params ListOperationParams, opts ...RequestOption) (any, error) {
+func ListOperation(ctx context.Context, clientConfig ClientConfig, params ListOperationParams, opts ...RequestOption) (*ListOperationResponse, error) {
 	projectId := params.ProjectId
 	cursor := params.Cursor
 	limit := params.Limit
@@ -72,7 +72,7 @@ func ListOperation(ctx context.Context, clientConfig ClientConfig, params ListOp
 		}
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/operations", EncodePathSegment(projectId)), &RequestOpts{
+	resp, err := DoCfg[ListOperationResponse](ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/operations", EncodePathSegment(projectId)), &RequestOpts{
 		Query: map[string]any{
 			"cursor": QueryValue{Value: cursor, Style: "form", Explode: true},
 			"limit":  QueryValue{Value: limit, Style: "form", Explode: true},
@@ -84,5 +84,5 @@ func ListOperation(ctx context.Context, clientConfig ClientConfig, params ListOp
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }

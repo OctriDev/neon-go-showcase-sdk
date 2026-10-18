@@ -18,7 +18,7 @@ type CreateBranchParams struct {
 // Parameters:
 //
 //	projectId: The Neon project ID
-func CreateBranch(ctx context.Context, clientConfig ClientConfig, params CreateBranchParams, opts ...RequestOption) (any, error) {
+func CreateBranch(ctx context.Context, clientConfig ClientConfig, params CreateBranchParams, opts ...RequestOption) (*CreateBranchResponse, error) {
 	projectId := params.ProjectId
 	body := params.Body
 
@@ -26,7 +26,7 @@ func CreateBranch(ctx context.Context, clientConfig ClientConfig, params CreateB
 		return nil, err
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "POST", fmt.Sprintf("/projects/%s/branches", EncodePathSegment(projectId)), &RequestOpts{
+	resp, err := DoCfg[CreateBranchResponse](ctx, &clientConfig, "POST", fmt.Sprintf("/projects/%s/branches", EncodePathSegment(projectId)), &RequestOpts{
 		Body:        body,
 		OperationID: "CreateBranch",
 		Errors:      ErrorDecoders{"default": decodeErrorData[GeneralError]},
@@ -35,7 +35,7 @@ func CreateBranch(ctx context.Context, clientConfig ClientConfig, params CreateB
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type ListBranchParams struct {
@@ -66,7 +66,7 @@ type ListBranchParams struct {
 //	(soft-deleted within the recovery window). If false or not provided, return
 //	only active (non-deleted) branches. This parameter is part of the Branch
 //	Recovery feature, which is in preview and not available to all users.
-func ListBranch(ctx context.Context, clientConfig ClientConfig, params ListBranchParams, opts ...RequestOption) (any, error) {
+func ListBranch(ctx context.Context, clientConfig ClientConfig, params ListBranchParams, opts ...RequestOption) (*ListBranchResponse, error) {
 	projectId := params.ProjectId
 	search := params.Search
 	sortBy := params.SortBy
@@ -85,7 +85,7 @@ func ListBranch(ctx context.Context, clientConfig ClientConfig, params ListBranc
 		}
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/branches", EncodePathSegment(projectId)), &RequestOpts{
+	resp, err := DoCfg[ListBranchResponse](ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/branches", EncodePathSegment(projectId)), &RequestOpts{
 		Query: map[string]any{
 			"search":          QueryValue{Value: search, Style: "form", Explode: true},
 			"sort_by":         QueryValue{Value: sortBy, Style: "form", Explode: true},
@@ -101,7 +101,7 @@ func ListBranch(ctx context.Context, clientConfig ClientConfig, params ListBranc
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type CreateBranchAnonymizedParams struct {
@@ -116,7 +116,7 @@ type CreateBranchAnonymizedParams struct {
 // Parameters:
 //
 //	projectId: The Neon project ID
-func CreateBranchAnonymized(ctx context.Context, clientConfig ClientConfig, params CreateBranchAnonymizedParams, opts ...RequestOption) (any, error) {
+func CreateBranchAnonymized(ctx context.Context, clientConfig ClientConfig, params CreateBranchAnonymizedParams, opts ...RequestOption) (*CreateBranchResponse, error) {
 	projectId := params.ProjectId
 	body := params.Body
 
@@ -124,7 +124,7 @@ func CreateBranchAnonymized(ctx context.Context, clientConfig ClientConfig, para
 		return nil, err
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "POST", fmt.Sprintf("/projects/%s/branch_anonymized", EncodePathSegment(projectId)), &RequestOpts{
+	resp, err := DoCfg[CreateBranchResponse](ctx, &clientConfig, "POST", fmt.Sprintf("/projects/%s/branch_anonymized", EncodePathSegment(projectId)), &RequestOpts{
 		Body:        body,
 		OperationID: "CreateBranchAnonymized",
 		Errors:      ErrorDecoders{"default": decodeErrorData[GeneralError]},
@@ -133,7 +133,7 @@ func CreateBranchAnonymized(ctx context.Context, clientConfig ClientConfig, para
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type CountBranchParams struct {
@@ -180,7 +180,7 @@ type GetBranchParams struct {
 //
 //	projectId: The Neon project ID
 //	branchId: The branch ID
-func GetBranch(ctx context.Context, clientConfig ClientConfig, params GetBranchParams, opts ...RequestOption) (any, error) {
+func GetBranch(ctx context.Context, clientConfig ClientConfig, params GetBranchParams, opts ...RequestOption) (*GetBranchResponse, error) {
 	projectId := params.ProjectId
 	branchId := params.BranchId
 
@@ -192,7 +192,7 @@ func GetBranch(ctx context.Context, clientConfig ClientConfig, params GetBranchP
 		return nil, err
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/branches/%s", EncodePathSegment(projectId), EncodePathSegment(branchId)), &RequestOpts{
+	resp, err := DoCfg[GetBranchResponse](ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/branches/%s", EncodePathSegment(projectId), EncodePathSegment(branchId)), &RequestOpts{
 		OperationID: "GetBranch",
 		Errors:      ErrorDecoders{"default": decodeErrorData[GeneralError]},
 		Options:     opts,
@@ -200,7 +200,7 @@ func GetBranch(ctx context.Context, clientConfig ClientConfig, params GetBranchP
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type DeleteBranchParams struct {

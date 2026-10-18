@@ -523,3 +523,118 @@ func (value *BranchSchemaJSONTablesConstraintsReferencedTable) UnmarshalJSON(dat
 func NewBranchSchemaJSONTablesConstraintsReferencedTable(fields BranchSchemaJSONTablesConstraintsReferencedTable) (*BranchSchemaJSONTablesConstraintsReferencedTable, error) {
 	return ConstructModel(fields)
 }
+
+// ListBranchResponse Typed representation of the `ListBranchResponse` API schema.
+type ListBranchResponse struct {
+	// Branches Branches in the project. Each includes `id`, `name`, `current_state`, and `created_at`.
+	Branches []Branch `json:"branches"`
+	// Annotations Map of annotations keyed by resource identifier, where each value contains the annotation data for that resource.
+	Annotations map[string]AnnotationData `json:"annotations"`
+	// Pagination To paginate the response, issue an initial request with `limit` value. Then, add the value returned in the response `.pagination.next` attribute into the request under the `cursor` query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor `next` are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.
+	Pagination *CursorPagination `json:"pagination,omitempty"`
+}
+
+func (value *ListBranchResponse) UnmarshalJSON(data []byte) error {
+	type ListBranchResponseAlias ListBranchResponse
+	var decoded ListBranchResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = ListBranchResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"branches", "annotations"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"branches", "annotations"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewListBranchResponse returns a validated ListBranchResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewListBranchResponse(fields ListBranchResponse) (*ListBranchResponse, error) {
+	return ConstructModel(fields)
+}
+
+// CreateBranchResponse Typed representation of the `CreateBranchResponse` API schema.
+type CreateBranchResponse struct {
+	// Branch Branch returned by the request.
+	Branch Branch `json:"branch"`
+	// Endpoints Compute endpoints in the project. Each includes `id`, `branch_id`, `host`, and `type`.
+	Endpoints []Endpoint `json:"endpoints"`
+	// Operations Required array value serialized in the `operations` wire field.
+	Operations []Operation `json:"operations"`
+	// Roles Roles belonging to the branch. Each role includes fields such as `branch_id`, `name`, `protected`, `created_at`, and `updated_at`.
+	Roles []Role `json:"roles"`
+	// Databases Databases on the branch. Each includes `id`, `name`, `owner_name`, and `created_at`.
+	Databases []Database `json:"databases"`
+	// ConnectionUris Connection URIs for the compute endpoint, including credentials.
+	ConnectionUris []ConnectionDetails `json:"connection_uris,omitempty"`
+}
+
+func (value *CreateBranchResponse) UnmarshalJSON(data []byte) error {
+	type CreateBranchResponseAlias CreateBranchResponse
+	var decoded CreateBranchResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = CreateBranchResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"branch", "endpoints", "operations", "roles", "databases"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"branch", "endpoints", "operations", "roles", "databases"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewCreateBranchResponse returns a validated CreateBranchResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewCreateBranchResponse(fields CreateBranchResponse) (*CreateBranchResponse, error) {
+	return ConstructModel(fields)
+}
+
+// GetBranchResponse Typed representation of the `GetBranchResponse` API schema.
+type GetBranchResponse struct {
+	// Branch Branch returned by the request.
+	Branch Branch `json:"branch"`
+	// Annotation Annotation data associated with the annotated object.
+	Annotation AnnotationData `json:"annotation"`
+}
+
+func (value *GetBranchResponse) UnmarshalJSON(data []byte) error {
+	type GetBranchResponseAlias GetBranchResponse
+	var decoded GetBranchResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = GetBranchResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"branch", "annotation"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"branch", "annotation"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewGetBranchResponse returns a validated GetBranchResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewGetBranchResponse(fields GetBranchResponse) (*GetBranchResponse, error) {
+	return ConstructModel(fields)
+}

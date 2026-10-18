@@ -26,7 +26,7 @@ type ListFunctionsParams struct {
 //	fetch next page of the list.
 //	limit: Specify a value from 1 to 1000 to limit number of functions in the
 //	response
-func ListFunctions(ctx context.Context, clientConfig ClientConfig, params ListFunctionsParams, opts ...RequestOption) (any, error) {
+func ListFunctions(ctx context.Context, clientConfig ClientConfig, params ListFunctionsParams, opts ...RequestOption) (*ListFunctionsResponse, error) {
 	projectId := params.ProjectId
 	branchId := params.BranchId
 	cursor := params.Cursor
@@ -46,7 +46,7 @@ func ListFunctions(ctx context.Context, clientConfig ClientConfig, params ListFu
 		}
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/branches/%s/functions", EncodePathSegment(projectId), EncodePathSegment(branchId)), &RequestOpts{
+	resp, err := DoCfg[ListFunctionsResponse](ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/branches/%s/functions", EncodePathSegment(projectId), EncodePathSegment(branchId)), &RequestOpts{
 		Query: map[string]any{
 			"cursor": QueryValue{Value: cursor, Style: "form", Explode: true},
 			"limit":  QueryValue{Value: limit, Style: "form", Explode: true},
@@ -58,7 +58,7 @@ func ListFunctions(ctx context.Context, clientConfig ClientConfig, params ListFu
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type GetFunctionsParams struct {
@@ -574,7 +574,7 @@ type ListFunctionsCustomDomainsParams struct {
 //	fetch next page of the list.
 //	limit: Specify a value from 1 to 1000 to limit number of domains in the
 //	response
-func ListFunctionsCustomDomains(ctx context.Context, clientConfig ClientConfig, params ListFunctionsCustomDomainsParams, opts ...RequestOption) (any, error) {
+func ListFunctionsCustomDomains(ctx context.Context, clientConfig ClientConfig, params ListFunctionsCustomDomainsParams, opts ...RequestOption) (*ListFunctionsCustomDomainsResponse, error) {
 	projectId := params.ProjectId
 	branchId := params.BranchId
 	cursor := params.Cursor
@@ -594,7 +594,7 @@ func ListFunctionsCustomDomains(ctx context.Context, clientConfig ClientConfig, 
 		}
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/branches/%s/custom-domains", EncodePathSegment(projectId), EncodePathSegment(branchId)), &RequestOpts{
+	resp, err := DoCfg[ListFunctionsCustomDomainsResponse](ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/branches/%s/custom-domains", EncodePathSegment(projectId), EncodePathSegment(branchId)), &RequestOpts{
 		Query: map[string]any{
 			"cursor": QueryValue{Value: cursor, Style: "form", Explode: true},
 			"limit":  QueryValue{Value: limit, Style: "form", Explode: true},
@@ -606,7 +606,7 @@ func ListFunctionsCustomDomains(ctx context.Context, clientConfig ClientConfig, 
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type DeleteFunctionsCustomDomainParams struct {

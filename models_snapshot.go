@@ -250,3 +250,40 @@ func (value *BackupSchedule) UnmarshalJSON(data []byte) error {
 func NewBackupSchedule(fields BackupSchedule) (*BackupSchedule, error) {
 	return ConstructModel(fields)
 }
+
+// RestoreSnapshotResponse Typed representation of the `RestoreSnapshotResponse` API schema.
+type RestoreSnapshotResponse struct {
+	// Branch Branch returned by the request.
+	Branch Branch `json:"branch"`
+	// Endpoints Compute endpoints associated with the project.
+	Endpoints []Endpoint `json:"endpoints,omitempty"`
+	// Operations Required array value serialized in the `operations` wire field.
+	Operations []Operation `json:"operations"`
+}
+
+func (value *RestoreSnapshotResponse) UnmarshalJSON(data []byte) error {
+	type RestoreSnapshotResponseAlias RestoreSnapshotResponse
+	var decoded RestoreSnapshotResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = RestoreSnapshotResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"branch", "operations"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"branch", "operations"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewRestoreSnapshotResponse returns a validated RestoreSnapshotResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewRestoreSnapshotResponse(fields RestoreSnapshotResponse) (*RestoreSnapshotResponse, error) {
+	return ConstructModel(fields)
+}

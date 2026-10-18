@@ -70,7 +70,7 @@ type GetConsumptionHistoryPerProjectParams struct {
 //	comma-separated list in a single parameter value. - As an array of parameter
 //	values: `metrics=cpu_seconds&metrics=ram_bytes` - As a comma-separated list
 //	in a single parameter value: `metrics=cpu_seconds,ram_bytes`
-func GetConsumptionHistoryPerProject(ctx context.Context, clientConfig ClientConfig, params GetConsumptionHistoryPerProjectParams, opts ...RequestOption) (any, error) {
+func GetConsumptionHistoryPerProject(ctx context.Context, clientConfig ClientConfig, params GetConsumptionHistoryPerProjectParams, opts ...RequestOption) (*GetConsumptionHistoryPerProjectResponse, error) {
 	from := params.From
 	to := params.To
 	granularity := params.Granularity
@@ -107,7 +107,7 @@ func GetConsumptionHistoryPerProject(ctx context.Context, clientConfig ClientCon
 		}
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "GET", "/consumption_history/projects", &RequestOpts{
+	resp, err := DoCfg[GetConsumptionHistoryPerProjectResponse](ctx, &clientConfig, "GET", "/consumption_history/projects", &RequestOpts{
 		Query: map[string]any{
 			"from":               QueryValue{Value: from, Style: "form", Explode: true},
 			"to":                 QueryValue{Value: to, Style: "form", Explode: true},
@@ -126,7 +126,7 @@ func GetConsumptionHistoryPerProject(ctx context.Context, clientConfig ClientCon
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type GetConsumptionHistoryPerProjectV2Params struct {
@@ -186,7 +186,7 @@ type GetConsumptionHistoryPerProjectV2Params struct {
 //	comma-separated list: -
 //	`project_ids=cold-poetry-09157238&project_ids=quiet-snow-71788278` -
 //	`project_ids=cold-poetry-09157238,quiet-snow-71788278`
-func GetConsumptionHistoryPerProjectV2(ctx context.Context, clientConfig ClientConfig, params GetConsumptionHistoryPerProjectV2Params, opts ...RequestOption) (any, error) {
+func GetConsumptionHistoryPerProjectV2(ctx context.Context, clientConfig ClientConfig, params GetConsumptionHistoryPerProjectV2Params, opts ...RequestOption) (*GetConsumptionHistoryPerProjectV2Response, error) {
 	from := params.From
 	to := params.To
 	granularity := params.Granularity
@@ -220,7 +220,7 @@ func GetConsumptionHistoryPerProjectV2(ctx context.Context, clientConfig ClientC
 		}
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "GET", "/consumption_history/v2/projects", &RequestOpts{
+	resp, err := DoCfg[GetConsumptionHistoryPerProjectV2Response](ctx, &clientConfig, "GET", "/consumption_history/v2/projects", &RequestOpts{
 		Query: map[string]any{
 			"from":        QueryValue{Value: from, Style: "form", Explode: true},
 			"to":          QueryValue{Value: to, Style: "form", Explode: true},
@@ -238,7 +238,7 @@ func GetConsumptionHistoryPerProjectV2(ctx context.Context, clientConfig ClientC
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type GetConsumptionHistoryPerBranchV2Params struct {
@@ -305,7 +305,7 @@ type GetConsumptionHistoryPerBranchV2Params struct {
 //	as repeated query parameters or a comma-separated list: -
 //	`branch_ids=br-aged-salad-637688&branch_ids=br-sweet-breeze-497520` -
 //	`branch_ids=br-aged-salad-637688,br-sweet-breeze-497520`
-func GetConsumptionHistoryPerBranchV2(ctx context.Context, clientConfig ClientConfig, params GetConsumptionHistoryPerBranchV2Params, opts ...RequestOption) (any, error) {
+func GetConsumptionHistoryPerBranchV2(ctx context.Context, clientConfig ClientConfig, params GetConsumptionHistoryPerBranchV2Params, opts ...RequestOption) (*GetConsumptionHistoryPerBranchV2Response, error) {
 	projectIds := params.ProjectIds
 	from := params.From
 	to := params.To
@@ -344,7 +344,7 @@ func GetConsumptionHistoryPerBranchV2(ctx context.Context, clientConfig ClientCo
 		}
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "GET", "/consumption_history/v2/branches", &RequestOpts{
+	resp, err := DoCfg[GetConsumptionHistoryPerBranchV2Response](ctx, &clientConfig, "GET", "/consumption_history/v2/branches", &RequestOpts{
 		Query: map[string]any{
 			"project_ids": QueryValue{Value: projectIds, Style: "form", Explode: true},
 			"from":        QueryValue{Value: from, Style: "form", Explode: true},
@@ -363,5 +363,5 @@ func GetConsumptionHistoryPerBranchV2(ctx context.Context, clientConfig ClientCo
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }

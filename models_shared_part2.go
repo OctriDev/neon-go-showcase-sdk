@@ -3,7 +3,10 @@
 
 package sdk
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 func (value *ListNeonAuthOauthProvidersResponse) UnmarshalJSON(data []byte) error {
 	type ListNeonAuthOauthProvidersResponseAlias ListNeonAuthOauthProvidersResponse
@@ -38,6 +41,25 @@ type SharedEmailServer struct {
 	SenderEmail *string `json:"sender_email,omitempty"`
 	// SenderName Display name shown as the sender in outgoing emails.
 	SenderName *string `json:"sender_name,omitempty"`
+	// Type Optional enumerated value serialized in the `type` wire field.
+	Type *SharedEmailServerTypeEnum `json:"type,omitempty"`
+}
+
+func (value *SharedEmailServer) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"shared"}); err != nil {
+		return err
+	}
+	type SharedEmailServerAlias SharedEmailServer
+	var decoded SharedEmailServerAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = SharedEmailServer(decoded)
+	return nil
 }
 
 // NewSharedEmailServer returns a validated SharedEmailServer built from named fields.
@@ -45,6 +67,27 @@ type SharedEmailServer struct {
 // reported as *SdkValidationError.
 func NewSharedEmailServer(fields SharedEmailServer) (*SharedEmailServer, error) {
 	return ConstructModel(fields)
+}
+
+// SharedEmailServerTypeEnum Optional enumerated value serialized in the `type` wire field.
+type SharedEmailServerTypeEnum string
+
+const (
+	SharedEmailServerTypeEnumShared SharedEmailServerTypeEnum = "shared"
+)
+
+func (value *SharedEmailServerTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "shared":
+		*value = SharedEmailServerTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "SharedEmailServerTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown SharedEmailServerTypeEnum: %v", raw)}
+	}
 }
 
 // GeneralError Typed representation of the `GeneralError` API schema.

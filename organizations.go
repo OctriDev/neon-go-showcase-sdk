@@ -238,7 +238,7 @@ type ListOrganizationsMembersParams struct {
 //	fetch next page of the list.
 //	sortOrder: Defines the sorting order of entities.
 //	limit: The maximum number of members to return in the response
-func ListOrganizationsMembers(ctx context.Context, clientConfig ClientConfig, params ListOrganizationsMembersParams, opts ...RequestOption) (any, error) {
+func ListOrganizationsMembers(ctx context.Context, clientConfig ClientConfig, params ListOrganizationsMembersParams, opts ...RequestOption) (*ListOrganizationsMembersResponse, error) {
 	orgId := params.OrgId
 	sortBy := params.SortBy
 	cursor := params.Cursor
@@ -255,7 +255,7 @@ func ListOrganizationsMembers(ctx context.Context, clientConfig ClientConfig, pa
 		}
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "GET", fmt.Sprintf("/organizations/%s/members", EncodePathSegment(orgId)), &RequestOpts{
+	resp, err := DoCfg[ListOrganizationsMembersResponse](ctx, &clientConfig, "GET", fmt.Sprintf("/organizations/%s/members", EncodePathSegment(orgId)), &RequestOpts{
 		Query: map[string]any{
 			"sort_by":    QueryValue{Value: sortBy, Style: "form", Explode: true},
 			"cursor":     QueryValue{Value: cursor, Style: "form", Explode: true},
@@ -269,7 +269,7 @@ func ListOrganizationsMembers(ctx context.Context, clientConfig ClientConfig, pa
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type GetOrganizationMemberParams struct {

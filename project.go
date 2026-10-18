@@ -121,7 +121,7 @@ type ListProjectsParams struct {
 //	implicit implementation defined timeout is chosen with the same behaviour as
 //	above
 //	recoverable: Show only deleted projects within the recovery window.
-func ListProjects(ctx context.Context, clientConfig ClientConfig, params ListProjectsParams, opts ...RequestOption) (any, error) {
+func ListProjects(ctx context.Context, clientConfig ClientConfig, params ListProjectsParams, opts ...RequestOption) (*ListProjectsResponse, error) {
 	cursor := params.Cursor
 	limit := params.Limit
 	search := params.Search
@@ -147,7 +147,7 @@ func ListProjects(ctx context.Context, clientConfig ClientConfig, params ListPro
 		}
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "GET", "/projects", &RequestOpts{
+	resp, err := DoCfg[ListProjectsResponse](ctx, &clientConfig, "GET", "/projects", &RequestOpts{
 		Query: map[string]any{
 			"cursor":      QueryValue{Value: cursor, Style: "form", Explode: true},
 			"limit":       QueryValue{Value: limit, Style: "form", Explode: true},
@@ -163,7 +163,7 @@ func ListProjects(ctx context.Context, clientConfig ClientConfig, params ListPro
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type CreateProjectParams struct {
@@ -176,10 +176,10 @@ type CreateProjectParams struct {
 //
 //	project: Configuration for the new project, including name, region, and
 //	Postgres compute and storage settings.
-func CreateProject(ctx context.Context, clientConfig ClientConfig, params CreateProjectParams, opts ...RequestOption) (any, error) {
+func CreateProject(ctx context.Context, clientConfig ClientConfig, params CreateProjectParams, opts ...RequestOption) (*CreateProjectResponse, error) {
 	project := params.Project
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "POST", "/projects", &RequestOpts{
+	resp, err := DoCfg[CreateProjectResponse](ctx, &clientConfig, "POST", "/projects", &RequestOpts{
 		Body: map[string]any{
 			"project": project,
 		},
@@ -190,7 +190,7 @@ func CreateProject(ctx context.Context, clientConfig ClientConfig, params Create
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type ListSharedProjectsParams struct {
@@ -215,7 +215,7 @@ type ListSharedProjectsParams struct {
 //	listed in the "unavailable" attribute of the response. If not specified, an
 //	implicit implementation defined timeout is chosen with the same behaviour as
 //	above
-func ListSharedProjects(ctx context.Context, clientConfig ClientConfig, params ListSharedProjectsParams, opts ...RequestOption) (any, error) {
+func ListSharedProjects(ctx context.Context, clientConfig ClientConfig, params ListSharedProjectsParams, opts ...RequestOption) (*ListSharedProjectsResponse, error) {
 	cursor := params.Cursor
 	limit := params.Limit
 	search := params.Search
@@ -233,7 +233,7 @@ func ListSharedProjects(ctx context.Context, clientConfig ClientConfig, params L
 		}
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "GET", "/projects/shared", &RequestOpts{
+	resp, err := DoCfg[ListSharedProjectsResponse](ctx, &clientConfig, "GET", "/projects/shared", &RequestOpts{
 		Query: map[string]any{
 			"cursor":  QueryValue{Value: cursor, Style: "form", Explode: true},
 			"limit":   QueryValue{Value: limit, Style: "form", Explode: true},
@@ -247,7 +247,7 @@ func ListSharedProjects(ctx context.Context, clientConfig ClientConfig, params L
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type GetProjectParams struct {
@@ -290,7 +290,7 @@ type UpdateProjectParams struct {
 //
 //	projectId: The Neon project ID
 //	project: Required object value serialized in the `project` wire field.
-func UpdateProject(ctx context.Context, clientConfig ClientConfig, params UpdateProjectParams, opts ...RequestOption) (any, error) {
+func UpdateProject(ctx context.Context, clientConfig ClientConfig, params UpdateProjectParams, opts ...RequestOption) (*UpdateProjectResponse, error) {
 	projectId := params.ProjectId
 	project := params.Project
 
@@ -298,7 +298,7 @@ func UpdateProject(ctx context.Context, clientConfig ClientConfig, params Update
 		return nil, err
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "PATCH", fmt.Sprintf("/projects/%s", EncodePathSegment(projectId)), &RequestOpts{
+	resp, err := DoCfg[UpdateProjectResponse](ctx, &clientConfig, "PATCH", fmt.Sprintf("/projects/%s", EncodePathSegment(projectId)), &RequestOpts{
 		Body: map[string]any{
 			"project": project,
 		},
@@ -309,7 +309,7 @@ func UpdateProject(ctx context.Context, clientConfig ClientConfig, params Update
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type DeleteProjectParams struct {

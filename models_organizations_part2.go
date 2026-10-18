@@ -250,3 +250,38 @@ func (value *OrganizationMembersResponse) UnmarshalJSON(data []byte) error {
 func NewOrganizationMembersResponse(fields OrganizationMembersResponse) (*OrganizationMembersResponse, error) {
 	return ConstructModel(fields)
 }
+
+// ListOrganizationsMembersResponse Typed representation of the `ListOrganizationsMembersResponse` API schema.
+type ListOrganizationsMembersResponse struct {
+	// Members Members of the organization, each combining membership details (role, status) with the associated user's identity.
+	Members []MemberWithUser `json:"members"`
+	// Pagination To paginate the response, issue an initial request with `limit` value. Then, add the value returned in the response `.pagination.next` attribute into the request under the `cursor` query parameter to the subsequent request to retrieve next page in pagination. The contents on cursor `next` are opaque, clients are not expected to make any assumptions on the format of the data inside the cursor.
+	Pagination *CursorPagination `json:"pagination,omitempty"`
+}
+
+func (value *ListOrganizationsMembersResponse) UnmarshalJSON(data []byte) error {
+	type ListOrganizationsMembersResponseAlias ListOrganizationsMembersResponse
+	var decoded ListOrganizationsMembersResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = ListOrganizationsMembersResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"members"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"members"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewListOrganizationsMembersResponse returns a validated ListOrganizationsMembersResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewListOrganizationsMembersResponse(fields ListOrganizationsMembersResponse) (*ListOrganizationsMembersResponse, error) {
+	return ConstructModel(fields)
+}

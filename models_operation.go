@@ -37,3 +37,38 @@ func (value *OperationResponse) UnmarshalJSON(data []byte) error {
 func NewOperationResponse(fields OperationResponse) (*OperationResponse, error) {
 	return ConstructModel(fields)
 }
+
+// ListOperationResponse Typed representation of the `ListOperationResponse` API schema.
+type ListOperationResponse struct {
+	// Operations Required array value serialized in the `operations` wire field.
+	Operations []Operation `json:"operations"`
+	// Pagination Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.
+	Pagination *Pagination `json:"pagination,omitempty"`
+}
+
+func (value *ListOperationResponse) UnmarshalJSON(data []byte) error {
+	type ListOperationResponseAlias ListOperationResponse
+	var decoded ListOperationResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = ListOperationResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"operations"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"operations"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewListOperationResponse returns a validated ListOperationResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewListOperationResponse(fields ListOperationResponse) (*ListOperationResponse, error) {
+	return ConstructModel(fields)
+}

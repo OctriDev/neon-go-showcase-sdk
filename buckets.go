@@ -234,6 +234,9 @@ func ListBucketsObjectsPaginated(ctx context.Context, clientConfig ClientConfig,
 				return nil
 			}
 		}
+		if !_page.IsTruncated {
+			return nil
+		}
 		if _page.NextCursor == nil {
 			return nil
 		}
@@ -263,7 +266,7 @@ func ListBucketsObjectsPages(ctx context.Context, clientConfig ClientConfig, par
 		if len(_items) == 0 {
 			return nil
 		}
-		_hasMore := _page.NextCursor != nil
+		_hasMore := _page.IsTruncated && _page.NextCursor != nil
 		if !yieldPage(ListBucketsObjectsPage{Data: _page, Items: _items, HasMore: _hasMore}) {
 			return nil
 		}

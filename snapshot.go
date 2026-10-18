@@ -291,7 +291,7 @@ type RestoreSnapshotParams struct {
 //	immediately. This will complete the restore and move any associated computes
 //	to the new branch, similar to the `finalizeRestoreBranch` operation.
 //	Defaults to `false` to allow previewing the restored snapshot data first.
-func RestoreSnapshot(ctx context.Context, clientConfig ClientConfig, params RestoreSnapshotParams, opts ...RequestOption) (any, error) {
+func RestoreSnapshot(ctx context.Context, clientConfig ClientConfig, params RestoreSnapshotParams, opts ...RequestOption) (*RestoreSnapshotResponse, error) {
 	projectId := params.ProjectId
 	snapshotId := params.SnapshotId
 	name := params.Name
@@ -307,7 +307,7 @@ func RestoreSnapshot(ctx context.Context, clientConfig ClientConfig, params Rest
 		return nil, err
 	}
 
-	resp, err := DoAnyCfg(ctx, &clientConfig, "POST", fmt.Sprintf("/projects/%s/snapshots/%s/restore", EncodePathSegment(projectId), EncodePathSegment(snapshotId)), &RequestOpts{
+	resp, err := DoCfg[RestoreSnapshotResponse](ctx, &clientConfig, "POST", fmt.Sprintf("/projects/%s/snapshots/%s/restore", EncodePathSegment(projectId), EncodePathSegment(snapshotId)), &RequestOpts{
 		Query: map[string]any{
 			"name": QueryValue{Value: name, Style: "form", Explode: true},
 		},
@@ -323,7 +323,7 @@ func RestoreSnapshot(ctx context.Context, clientConfig ClientConfig, params Rest
 	if err != nil {
 		return nil, err
 	}
-	return resp.Data, nil
+	return &resp.Data, nil
 }
 
 type GetSnapshotScheduleParams struct {

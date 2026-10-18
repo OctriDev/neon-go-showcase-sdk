@@ -514,7 +514,7 @@ func NewBranchNamespace(config ClientConfig) *BranchNamespace {
 // Parameters:
 //
 //	projectId: The Neon project ID
-func (sdk *BranchNamespace) Create(ctx context.Context, params CreateBranchParams, opts ...RequestOption) (any, error) {
+func (sdk *BranchNamespace) Create(ctx context.Context, params CreateBranchParams, opts ...RequestOption) (*CreateBranchResponse, error) {
 	return CreateBranch(ctx, sdk.config, params, opts...)
 }
 
@@ -536,7 +536,7 @@ func (sdk *BranchNamespace) Create(ctx context.Context, params CreateBranchParam
 //	(soft-deleted within the recovery window). If false or not provided, return
 //	only active (non-deleted) branches. This parameter is part of the Branch
 //	Recovery feature, which is in preview and not available to all users.
-func (sdk *BranchNamespace) List(ctx context.Context, params ListBranchParams, opts ...RequestOption) (any, error) {
+func (sdk *BranchNamespace) List(ctx context.Context, params ListBranchParams, opts ...RequestOption) (*ListBranchResponse, error) {
 	return ListBranch(ctx, sdk.config, params, opts...)
 }
 
@@ -547,7 +547,7 @@ func (sdk *BranchNamespace) List(ctx context.Context, params ListBranchParams, o
 // Parameters:
 //
 //	projectId: The Neon project ID
-func (sdk *BranchNamespace) CreateAnonymized(ctx context.Context, params CreateBranchAnonymizedParams, opts ...RequestOption) (any, error) {
+func (sdk *BranchNamespace) CreateAnonymized(ctx context.Context, params CreateBranchAnonymizedParams, opts ...RequestOption) (*CreateBranchResponse, error) {
 	return CreateBranchAnonymized(ctx, sdk.config, params, opts...)
 }
 
@@ -567,7 +567,7 @@ func (sdk *BranchNamespace) Count(ctx context.Context, params CountBranchParams,
 //
 //	projectId: The Neon project ID
 //	branchId: The branch ID
-func (sdk *BranchNamespace) Get(ctx context.Context, params GetBranchParams, opts ...RequestOption) (any, error) {
+func (sdk *BranchNamespace) Get(ctx context.Context, params GetBranchParams, opts ...RequestOption) (*GetBranchResponse, error) {
 	return GetBranch(ctx, sdk.config, params, opts...)
 }
 

@@ -3,7 +3,10 @@
 
 package sdk
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 // StandardEmailServer Typed representation of the `StandardEmailServer` API schema.
 type StandardEmailServer struct {
@@ -19,6 +22,25 @@ type StandardEmailServer struct {
 	SenderEmail *string `json:"sender_email,omitempty"`
 	// SenderName Display name shown as the sender in outgoing emails.
 	SenderName *string `json:"sender_name,omitempty"`
+	// Type Optional enumerated value serialized in the `type` wire field.
+	Type *StandardEmailServerTypeEnum `json:"type,omitempty"`
+}
+
+func (value *StandardEmailServer) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"standard"}); err != nil {
+		return err
+	}
+	type StandardEmailServerAlias StandardEmailServer
+	var decoded StandardEmailServerAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = StandardEmailServer(decoded)
+	return nil
 }
 
 // NewStandardEmailServer returns a validated StandardEmailServer built from named fields.
@@ -26,6 +48,27 @@ type StandardEmailServer struct {
 // reported as *SdkValidationError.
 func NewStandardEmailServer(fields StandardEmailServer) (*StandardEmailServer, error) {
 	return ConstructModel(fields)
+}
+
+// StandardEmailServerTypeEnum Optional enumerated value serialized in the `type` wire field.
+type StandardEmailServerTypeEnum string
+
+const (
+	StandardEmailServerTypeEnumStandard StandardEmailServerTypeEnum = "standard"
+)
+
+func (value *StandardEmailServerTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "standard":
+		*value = StandardEmailServerTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "StandardEmailServerTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown StandardEmailServerTypeEnum: %v", raw)}
+	}
 }
 
 // StandardEmailServerResponse Typed representation of the `StandardEmailServerResponse` API schema.
@@ -42,19 +85,24 @@ type StandardEmailServerResponse struct {
 	SenderEmail string `json:"sender_email"`
 	// SenderName Display name shown as the sender in outgoing emails.
 	SenderName string `json:"sender_name"`
+	// Type Optional enumerated value serialized in the `type` wire field.
+	Type *StandardEmailServerResponseTypeEnum `json:"type,omitempty"`
 }
 
 func (value *StandardEmailServerResponse) UnmarshalJSON(data []byte) error {
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRawEnum("type", rawFields["type"], []string{"standard"}); err != nil {
+		return err
+	}
 	type StandardEmailServerResponseAlias StandardEmailServerResponse
 	var decoded StandardEmailServerResponseAlias
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		return err
 	}
 	*value = StandardEmailServerResponse(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
 	if err := ValidateRequired(rawFields, []string{"host", "port", "username", "password", "sender_email", "sender_name"}); err != nil {
 		return err
 	}
@@ -69,4 +117,25 @@ func (value *StandardEmailServerResponse) UnmarshalJSON(data []byte) error {
 // reported as *SdkValidationError.
 func NewStandardEmailServerResponse(fields StandardEmailServerResponse) (*StandardEmailServerResponse, error) {
 	return ConstructModel(fields)
+}
+
+// StandardEmailServerResponseTypeEnum Optional enumerated value serialized in the `type` wire field.
+type StandardEmailServerResponseTypeEnum string
+
+const (
+	StandardEmailServerResponseTypeEnumStandard StandardEmailServerResponseTypeEnum = "standard"
+)
+
+func (value *StandardEmailServerResponseTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "standard":
+		*value = StandardEmailServerResponseTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "StandardEmailServerResponseTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown StandardEmailServerResponseTypeEnum: %v", raw)}
+	}
 }

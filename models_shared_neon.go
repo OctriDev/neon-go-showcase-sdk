@@ -439,6 +439,19 @@ func (u *NeonAuthEmailServerConfig) UnmarshalJSON(data []byte) error {
 			}
 		}
 	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 StandardEmailServer
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.StandardEmailServer = &lossless0
+			return nil
+		}
+		var lossless1 SharedEmailServer
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.SharedEmailServer = &lossless1
+			return nil
+		}
+	}
 	var standardemailserver StandardEmailServer
 	if err := json.Unmarshal(data, &standardemailserver); err == nil && isNonEmptyNeonAuthEmailServerConfigStandardEmailServer(standardemailserver) {
 		u.StandardEmailServer = &standardemailserver
@@ -524,6 +537,19 @@ func (u *NeonAuthEmailServerConfigResponse) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 StandardEmailServerResponse
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.StandardEmailServerResponse = &lossless0
+			return nil
+		}
+		var lossless1 SharedEmailServer
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.SharedEmailServer = &lossless1
+			return nil
 		}
 	}
 	var standardemailserverresponse StandardEmailServerResponse
