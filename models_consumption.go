@@ -471,3 +471,108 @@ const (
 
 // ConsumptionHistoryQueryMetrics is an array alias.
 type ConsumptionHistoryQueryMetrics = []string
+
+// GetConsumptionHistoryPerProjectResponse Typed representation of the `GetConsumptionHistoryPerProjectResponse` API schema.
+type GetConsumptionHistoryPerProjectResponse struct {
+	// Projects Per-project consumption history records included in the response.
+	Projects []ConsumptionHistoryPerProject `json:"projects"`
+	// Pagination Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.
+	Pagination *Pagination `json:"pagination,omitempty"`
+}
+
+func (value *GetConsumptionHistoryPerProjectResponse) UnmarshalJSON(data []byte) error {
+	type GetConsumptionHistoryPerProjectResponseAlias GetConsumptionHistoryPerProjectResponse
+	var decoded GetConsumptionHistoryPerProjectResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = GetConsumptionHistoryPerProjectResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"projects"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"projects"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewGetConsumptionHistoryPerProjectResponse returns a validated GetConsumptionHistoryPerProjectResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewGetConsumptionHistoryPerProjectResponse(fields GetConsumptionHistoryPerProjectResponse) (*GetConsumptionHistoryPerProjectResponse, error) {
+	return ConstructModel(fields)
+}
+
+// GetConsumptionHistoryPerProjectV2Response Typed representation of the `GetConsumptionHistoryPerProjectV2Response` API schema.
+type GetConsumptionHistoryPerProjectV2Response struct {
+	// Projects Per-project consumption history entries for the requested time range.
+	Projects []ConsumptionHistoryPerProjectV2 `json:"projects"`
+	// Pagination Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.
+	Pagination *Pagination `json:"pagination,omitempty"`
+}
+
+func (value *GetConsumptionHistoryPerProjectV2Response) UnmarshalJSON(data []byte) error {
+	type GetConsumptionHistoryPerProjectV2ResponseAlias GetConsumptionHistoryPerProjectV2Response
+	var decoded GetConsumptionHistoryPerProjectV2ResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = GetConsumptionHistoryPerProjectV2Response(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"projects"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"projects"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewGetConsumptionHistoryPerProjectV2Response returns a validated GetConsumptionHistoryPerProjectV2Response built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewGetConsumptionHistoryPerProjectV2Response(fields GetConsumptionHistoryPerProjectV2Response) (*GetConsumptionHistoryPerProjectV2Response, error) {
+	return ConstructModel(fields)
+}
+
+// GetConsumptionHistoryPerBranchV2Response Typed representation of the `GetConsumptionHistoryPerBranchV2Response` API schema.
+type GetConsumptionHistoryPerBranchV2Response struct {
+	// Branches Per-branch consumption history records returned for the requested time range.
+	Branches []ConsumptionHistoryPerBranchV2 `json:"branches"`
+	// Pagination Cursor-based pagination. The `cursor` value reflects the endpoint's sort field (for example, an ID or timestamp), so pass it back unchanged.
+	Pagination *Pagination `json:"pagination,omitempty"`
+}
+
+func (value *GetConsumptionHistoryPerBranchV2Response) UnmarshalJSON(data []byte) error {
+	type GetConsumptionHistoryPerBranchV2ResponseAlias GetConsumptionHistoryPerBranchV2Response
+	var decoded GetConsumptionHistoryPerBranchV2ResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = GetConsumptionHistoryPerBranchV2Response(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"branches"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"branches"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewGetConsumptionHistoryPerBranchV2Response returns a validated GetConsumptionHistoryPerBranchV2Response built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewGetConsumptionHistoryPerBranchV2Response(fields GetConsumptionHistoryPerBranchV2Response) (*GetConsumptionHistoryPerBranchV2Response, error) {
+	return ConstructModel(fields)
+}

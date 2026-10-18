@@ -561,11 +561,11 @@ func GetAuthLegacyEmailServer(ctx context.Context, clientConfig ClientConfig, pa
 		return nil, err
 	}
 
-	resp, err := DoUnionCfg[NeonAuthEmailServerConfigResponse](ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/auth/email_server", EncodePathSegment(projectId)), &RequestOpts{
+	resp, err := DoCfg[NeonAuthEmailServerConfigResponse](ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/auth/email_server", EncodePathSegment(projectId)), &RequestOpts{
 		OperationID: "GetAuthLegacyEmailServer",
 		Errors:      ErrorDecoders{"default": decodeErrorData[GeneralError]},
 		Options:     opts,
-	}, UnmarshalNeonAuthEmailServerConfigResponse)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -594,12 +594,12 @@ func UpdateAuthLegacyEmailServer(ctx context.Context, clientConfig ClientConfig,
 		return nil, err
 	}
 
-	resp, err := DoUnionCfg[NeonAuthEmailServerConfigResponse](ctx, &clientConfig, "PATCH", fmt.Sprintf("/projects/%s/auth/email_server", EncodePathSegment(projectId)), &RequestOpts{
+	resp, err := DoCfg[NeonAuthEmailServerConfigResponse](ctx, &clientConfig, "PATCH", fmt.Sprintf("/projects/%s/auth/email_server", EncodePathSegment(projectId)), &RequestOpts{
 		Body:        body,
 		OperationID: "UpdateAuthLegacyEmailServer",
 		Errors:      ErrorDecoders{"default": decodeErrorData[GeneralError]},
 		Options:     opts,
-	}, UnmarshalNeonAuthEmailServerConfigResponse)
+	})
 	if err != nil {
 		return nil, err
 	}

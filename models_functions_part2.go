@@ -8,6 +8,39 @@ import (
 	"fmt"
 )
 
+func (value *ScheduleTriggerUpdateRequestTypeEnum) UnmarshalJSON(data []byte) error {
+	var raw string
+	if err := json.Unmarshal(data, &raw); err != nil {
+		return err
+	}
+	switch raw {
+	case "schedule":
+		*value = ScheduleTriggerUpdateRequestTypeEnum(raw)
+		return nil
+	default:
+		return &SdkValidationError{Field: "ScheduleTriggerUpdateRequestTypeEnum", Code: "enum", Message: fmt.Sprintf("unknown ScheduleTriggerUpdateRequestTypeEnum: %v", raw)}
+	}
+}
+
+// StorageObjectCreatedTriggerUpdateRequest Typed representation of the `StorageObjectCreatedTriggerUpdateRequest` API schema.
+type StorageObjectCreatedTriggerUpdateRequest struct {
+	// Type Trigger type discriminator; it does not change the trigger type.
+	Type StorageObjectCreatedTriggerUpdateRequestTypeEnum `json:"type"`
+	// FunctionSlug Replacement branch-local Function slug.
+	FunctionSlug *string `json:"function_slug,omitempty"`
+	// Name Optional `string` value serialized in the `name` wire field.
+	Name *string `json:"name,omitempty"`
+	// FunctionPath Optional `string` value serialized in the `function_path` wire field.
+	FunctionPath *string `json:"function_path,omitempty"`
+	// StorageObjectCreated Matches successful uploads to one exact bucket and, when configured, an
+	// object-key prefix. The Function receives a JSON request body with
+	// `type` set to `storage_object_created` and a `data` object containing
+	// exactly `bucket_name` and `object_key`.
+	StorageObjectCreated *FunctionTriggerStorageObjectCreated `json:"storage_object_created,omitempty"`
+	// Enabled True enables and false disables future matching uploads.
+	Enabled *bool `json:"enabled,omitempty"`
+}
+
 func (value *StorageObjectCreatedTriggerUpdateRequest) UnmarshalJSON(data []byte) error {
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
@@ -111,6 +144,19 @@ func (u *Trigger) UnmarshalJSON(data []byte) error {
 					return nil
 				}
 			}
+		}
+	}
+	var raw map[string]json.RawMessage
+	if json.Unmarshal(data, &raw) == nil {
+		var lossless0 ScheduleTrigger
+		if json.Unmarshal(data, &lossless0) == nil && keepsEveryKey(raw, lossless0) {
+			u.ScheduleTrigger = &lossless0
+			return nil
+		}
+		var lossless1 StorageObjectCreatedTrigger
+		if json.Unmarshal(data, &lossless1) == nil && keepsEveryKey(raw, lossless1) {
+			u.StorageObjectCreatedTrigger = &lossless1
+			return nil
 		}
 	}
 	var scheduletrigger ScheduleTrigger
@@ -669,7 +715,3 @@ func NewFunctionDeployRequest(fields FunctionDeployRequest) (*FunctionDeployRequ
 
 // FunctionDeployRequestRuntimeEnum Optional enumerated value serialized in the `runtime` wire field.
 type FunctionDeployRequestRuntimeEnum string
-
-const (
-	FunctionDeployRequestRuntimeEnumNodejs24 FunctionDeployRequestRuntimeEnum = "nodejs24"
-)

@@ -133,11 +133,11 @@ func GetAuthEmailProvider(ctx context.Context, clientConfig ClientConfig, params
 		return nil, err
 	}
 
-	resp, err := DoUnionCfg[NeonAuthEmailServerConfigResponse](ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/branches/%s/auth/email_provider", EncodePathSegment(projectId), EncodePathSegment(branchId)), &RequestOpts{
+	resp, err := DoCfg[NeonAuthEmailServerConfigResponse](ctx, &clientConfig, "GET", fmt.Sprintf("/projects/%s/branches/%s/auth/email_provider", EncodePathSegment(projectId), EncodePathSegment(branchId)), &RequestOpts{
 		OperationID: "GetAuthEmailProvider",
 		Errors:      ErrorDecoders{"default": decodeErrorData[GeneralError]},
 		Options:     opts,
-	}, UnmarshalNeonAuthEmailServerConfigResponse)
+	})
 	if err != nil {
 		return nil, err
 	}
@@ -171,12 +171,12 @@ func UpdateAuthEmailProvider(ctx context.Context, clientConfig ClientConfig, par
 		return nil, err
 	}
 
-	resp, err := DoUnionCfg[NeonAuthEmailServerConfigResponse](ctx, &clientConfig, "PATCH", fmt.Sprintf("/projects/%s/branches/%s/auth/email_provider", EncodePathSegment(projectId), EncodePathSegment(branchId)), &RequestOpts{
+	resp, err := DoCfg[NeonAuthEmailServerConfigResponse](ctx, &clientConfig, "PATCH", fmt.Sprintf("/projects/%s/branches/%s/auth/email_provider", EncodePathSegment(projectId), EncodePathSegment(branchId)), &RequestOpts{
 		Body:        body,
 		OperationID: "UpdateAuthEmailProvider",
 		Errors:      ErrorDecoders{"default": decodeErrorData[GeneralError]},
 		Options:     opts,
-	}, UnmarshalNeonAuthEmailServerConfigResponse)
+	})
 	if err != nil {
 		return nil, err
 	}

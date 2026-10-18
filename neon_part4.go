@@ -132,7 +132,7 @@ func (sdk *SnapshotNamespace) Update(ctx context.Context, params UpdateSnapshotP
 //	immediately. This will complete the restore and move any associated computes
 //	to the new branch, similar to the `finalizeRestoreBranch` operation.
 //	Defaults to `false` to allow previewing the restored snapshot data first.
-func (sdk *SnapshotNamespace) Restore(ctx context.Context, params RestoreSnapshotParams, opts ...RequestOption) (any, error) {
+func (sdk *SnapshotNamespace) Restore(ctx context.Context, params RestoreSnapshotParams, opts ...RequestOption) (*RestoreSnapshotResponse, error) {
 	return RestoreSnapshot(ctx, sdk.config, params, opts...)
 }
 
@@ -523,7 +523,7 @@ func NewFunctionsNamespace(config ClientConfig) *FunctionsNamespace {
 //	fetch next page of the list.
 //	limit: Specify a value from 1 to 1000 to limit number of functions in the
 //	response
-func (sdk *FunctionsNamespace) List(ctx context.Context, params ListFunctionsParams, opts ...RequestOption) (any, error) {
+func (sdk *FunctionsNamespace) List(ctx context.Context, params ListFunctionsParams, opts ...RequestOption) (*ListFunctionsResponse, error) {
 	return ListFunctions(ctx, sdk.config, params, opts...)
 }
 
@@ -690,6 +690,6 @@ func (sdk *FunctionsNamespace) RegisterCustomDomain(ctx context.Context, params 
 //	fetch next page of the list.
 //	limit: Specify a value from 1 to 1000 to limit number of domains in the
 //	response
-func (sdk *FunctionsNamespace) ListCustomDomains(ctx context.Context, params ListFunctionsCustomDomainsParams, opts ...RequestOption) (any, error) {
+func (sdk *FunctionsNamespace) ListCustomDomains(ctx context.Context, params ListFunctionsCustomDomainsParams, opts ...RequestOption) (*ListFunctionsCustomDomainsResponse, error) {
 	return ListFunctionsCustomDomains(ctx, sdk.config, params, opts...)
 }

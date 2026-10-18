@@ -3,10 +3,7 @@
 
 package sdk
 
-import (
-	"bytes"
-	"encoding/json"
-)
+import "encoding/json"
 
 // AddProjectJWKSRequest Add a new JWKS to a specific endpoint of a project
 type AddProjectJWKSRequest struct {
@@ -124,19 +121,253 @@ func NewJWKS(fields JWKS) (*JWKS, error) {
 	return ConstructModel(fields)
 }
 
-// ProjectJWKSResponse The list of configured JWKS definitions for a project
-type ProjectJWKSResponse struct {
-	// Jwks JWKS configurations associated with the project.
-	Jwks []JWKS `json:"jwks"`
+// AcceptProjectTransferRequestSatisfiesPlanError Typed representation of the `AcceptProjectTransferRequestSatisfiesPlanError` API schema.
+type AcceptProjectTransferRequestSatisfiesPlanError struct {
+	// Reasons List of reasons why the target account's plan cannot satisfy the transfer requirements. Each item contains a `code` identifying the constraint and a `message` with a human-readable explanation.
+	Reasons []AcceptProjectTransferRequestSatisfiesPlanErrorReasons `json:"reasons"`
 }
 
-func (value *ProjectJWKSResponse) UnmarshalJSON(data []byte) error {
-	type ProjectJWKSResponseAlias ProjectJWKSResponse
-	var decoded ProjectJWKSResponseAlias
+func (value *AcceptProjectTransferRequestSatisfiesPlanError) UnmarshalJSON(data []byte) error {
+	type AcceptProjectTransferRequestSatisfiesPlanErrorAlias AcceptProjectTransferRequestSatisfiesPlanError
+	var decoded AcceptProjectTransferRequestSatisfiesPlanErrorAlias
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		return err
 	}
-	*value = ProjectJWKSResponse(decoded)
+	*value = AcceptProjectTransferRequestSatisfiesPlanError(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"reasons"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"reasons"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewAcceptProjectTransferRequestSatisfiesPlanError returns a validated AcceptProjectTransferRequestSatisfiesPlanError built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewAcceptProjectTransferRequestSatisfiesPlanError(fields AcceptProjectTransferRequestSatisfiesPlanError) (*AcceptProjectTransferRequestSatisfiesPlanError, error) {
+	return ConstructModel(fields)
+}
+
+// AcceptProjectTransferRequestSatisfiesPlanErrorReasons Required object value serialized in the `reasons[]` wire field.
+type AcceptProjectTransferRequestSatisfiesPlanErrorReasons struct {
+	// Message Description of why the plan is not satisfied
+	Message string `json:"message"`
+	// Code A short code identifying the reason
+	Code string `json:"code"`
+}
+
+func (value *AcceptProjectTransferRequestSatisfiesPlanErrorReasons) UnmarshalJSON(data []byte) error {
+	type AcceptProjectTransferRequestSatisfiesPlanErrorReasonsAlias AcceptProjectTransferRequestSatisfiesPlanErrorReasons
+	var decoded AcceptProjectTransferRequestSatisfiesPlanErrorReasonsAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = AcceptProjectTransferRequestSatisfiesPlanErrorReasons(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"message", "code"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"message", "code"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewAcceptProjectTransferRequestSatisfiesPlanErrorReasons returns a validated AcceptProjectTransferRequestSatisfiesPlanErrorReasons built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewAcceptProjectTransferRequestSatisfiesPlanErrorReasons(fields AcceptProjectTransferRequestSatisfiesPlanErrorReasons) (*AcceptProjectTransferRequestSatisfiesPlanErrorReasons, error) {
+	return ConstructModel(fields)
+}
+
+// ProjectsResponse Typed representation of the `ProjectsResponse` API schema.
+type ProjectsResponse struct {
+	// Projects List of projects accessible to the caller. Projects that exist but could not be retrieved are identified in `unavailable_project_ids`.
+	Projects []ProjectListItem `json:"projects"`
+	// UnavailableProjectIds A list of project IDs indicating which projects are known to exist, but whose details could not
+	// be fetched within the requested (or implicit) time limit
+	UnavailableProjectIds []string `json:"unavailable_project_ids,omitempty"`
+}
+
+func (value *ProjectsResponse) UnmarshalJSON(data []byte) error {
+	type ProjectsResponseAlias ProjectsResponse
+	var decoded ProjectsResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = ProjectsResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"projects"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"projects"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewProjectsResponse returns a validated ProjectsResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewProjectsResponse(fields ProjectsResponse) (*ProjectsResponse, error) {
+	return ConstructModel(fields)
+}
+
+// GrantPermissionToProjectRequest Typed representation of the `GrantPermissionToProjectRequest` API schema.
+type GrantPermissionToProjectRequest struct {
+	// Email Email address of the user to grant project access to.
+	Email string `json:"email"`
+}
+
+func (value *GrantPermissionToProjectRequest) UnmarshalJSON(data []byte) error {
+	type GrantPermissionToProjectRequestAlias GrantPermissionToProjectRequest
+	var decoded GrantPermissionToProjectRequestAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = GrantPermissionToProjectRequest(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"email"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"email"}); err != nil {
+		return err
+	}
+	if err := ValidateLength("email", value.Email, LengthOpts{Min: Ptr[int](1), Max: Ptr[int](256)}); err != nil {
+		return err
+	}
+	if err := ValidateEmail("email", value.Email); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewGrantPermissionToProjectRequest returns a validated GrantPermissionToProjectRequest built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewGrantPermissionToProjectRequest(fields GrantPermissionToProjectRequest) (*GrantPermissionToProjectRequest, error) {
+	return ConstructModel(fields)
+}
+
+// SetProjectMemberRoleRequest Typed representation of the `SetProjectMemberRoleRequest` API schema.
+type SetProjectMemberRoleRequest struct {
+	// Role Per-project role. `viewer` maps to `VIEWER`, `editor` maps to `EDITOR`,
+	// and `admin` maps to `ADMIN`.
+	Role ProjectRole `json:"role"`
+}
+
+func (value *SetProjectMemberRoleRequest) UnmarshalJSON(data []byte) error {
+	type SetProjectMemberRoleRequestAlias SetProjectMemberRoleRequest
+	var decoded SetProjectMemberRoleRequestAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = SetProjectMemberRoleRequest(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"role"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"role"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewSetProjectMemberRoleRequest returns a validated SetProjectMemberRoleRequest built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewSetProjectMemberRoleRequest(fields SetProjectMemberRoleRequest) (*SetProjectMemberRoleRequest, error) {
+	return ConstructModel(fields)
+}
+
+// AllowedIps A list of IP addresses that are allowed to connect to the compute endpoint.
+// If the list is empty or not set, all IP addresses are allowed.
+// If protected_branches_only is true, the list will be applied only to protected branches.
+type AllowedIps struct {
+	// Ips A list of IP addresses that are allowed to connect to the endpoint.
+	Ips []string `json:"ips,omitempty"`
+	// ProtectedBranchesOnly If true, the list will be applied only to protected branches.
+	ProtectedBranchesOnly *bool `json:"protected_branches_only,omitempty"`
+}
+
+// NewAllowedIps returns a validated AllowedIps built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewAllowedIps(fields AllowedIps) (*AllowedIps, error) {
+	return ConstructModel(fields)
+}
+
+// MaintenanceWindow A maintenance window is a time period during which Neon may perform maintenance on the project's infrastructure.
+// During this time, the project's compute endpoints may be unavailable and existing connections can be
+// interrupted.
+type MaintenanceWindow struct {
+	// Weekdays A list of weekdays when the maintenance window is active.
+	// Encoded as ints, where 1 - Monday, and 7 - Sunday.
+	Weekdays []int64 `json:"weekdays"`
+	// StartTime Start time of the maintenance window, in the format of "HH:MM". Uses UTC.
+	StartTime string `json:"start_time"`
+	// EndTime End time of the maintenance window, in the format of "HH:MM". Uses UTC.
+	EndTime string `json:"end_time"`
+}
+
+func (value *MaintenanceWindow) UnmarshalJSON(data []byte) error {
+	type MaintenanceWindowAlias MaintenanceWindow
+	var decoded MaintenanceWindowAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = MaintenanceWindow(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"weekdays", "start_time", "end_time"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"weekdays", "start_time", "end_time"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewMaintenanceWindow returns a validated MaintenanceWindow built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewMaintenanceWindow(fields MaintenanceWindow) (*MaintenanceWindow, error) {
+	return ConstructModel(fields)
+}
+
+// JWKSResponse Typed representation of the `JWKSResponse` API schema.
+type JWKSResponse struct {
+	// Jwks JWKS configuration associated with the project.
+	Jwks JWKS `json:"jwks"`
+}
+
+func (value *JWKSResponse) UnmarshalJSON(data []byte) error {
+	type JWKSResponseAlias JWKSResponse
+	var decoded JWKSResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = JWKSResponse(decoded)
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
 		return err
@@ -150,488 +381,37 @@ func (value *ProjectJWKSResponse) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// NewProjectJWKSResponse returns a validated ProjectJWKSResponse built from named fields.
+// NewJWKSResponse returns a validated JWKSResponse built from named fields.
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
-func NewProjectJWKSResponse(fields ProjectJWKSResponse) (*ProjectJWKSResponse, error) {
+func NewJWKSResponse(fields JWKSResponse) (*JWKSResponse, error) {
 	return ConstructModel(fields)
 }
 
-// AdvisorCategory Category of an advisor issue
-type AdvisorCategory string
-
-const (
-	AdvisorCategorySecurity    AdvisorCategory = "SECURITY"
-	AdvisorCategoryPerformance AdvisorCategory = "PERFORMANCE"
-)
-
-// AdvisorIssue Typed representation of the `AdvisorIssue` API schema.
-type AdvisorIssue struct {
-	// Name Unique identifier for the issue type
-	Name string `json:"name"`
-	// Title Human-readable title
-	Title string `json:"title"`
-	// Level Severity level of the issue
-	Level string `json:"level"`
-	// Facing Whether this issue affects external API exposure or is internal only
-	Facing AdvisorIssueFacingEnum `json:"facing"`
-	// Categories Categories this issue belongs to
-	Categories []AdvisorCategory `json:"categories"`
-	// Description Detailed description of what this check detects
-	Description string `json:"description"`
-	// Detail Specific details about this instance of the issue
-	Detail string `json:"detail"`
-	// Remediation URL to documentation on how to fix this issue
-	Remediation string `json:"remediation"`
-	// Metadata Additional context-specific metadata
-	Metadata map[string]any `json:"metadata"`
-	// CacheKey Unique key for caching this issue result
-	CacheKey string `json:"cache_key"`
-}
-
-func (value *AdvisorIssue) UnmarshalJSON(data []byte) error {
-	type AdvisorIssueAlias AdvisorIssue
-	var decoded AdvisorIssueAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = AdvisorIssue(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"name", "title", "level", "facing", "categories", "description", "detail", "remediation", "metadata", "cache_key"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"name", "title", "level", "facing", "categories", "description", "detail", "remediation", "metadata", "cache_key"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewAdvisorIssue returns a validated AdvisorIssue built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewAdvisorIssue(fields AdvisorIssue) (*AdvisorIssue, error) {
-	return ConstructModel(fields)
-}
-
-// AdvisorIssueFacingEnum Whether this issue affects external API exposure or is internal only
-type AdvisorIssueFacingEnum string
-
-const (
-	AdvisorIssueFacingEnumExternal AdvisorIssueFacingEnum = "EXTERNAL"
-	AdvisorIssueFacingEnumInternal AdvisorIssueFacingEnum = "INTERNAL"
-)
-
-// ProjectListItem Essential data about the project. Full data is available at `GET /projects/{project_id}`.
-type ProjectListItem struct {
-	// Id The Neon project ID. Use as the `project_id` path parameter in other endpoints.
-	Id string `json:"id"`
-	// PlatformId The cloud platform identifier. Currently, only AWS is supported, for which the identifier is `aws`.
-	PlatformId string `json:"platform_id"`
-	// RegionId Cloud region where the project's Postgres compute and storage reside (for example, `aws-us-east-2`). Valid values are returned by `GET /regions`.
-	RegionId string `json:"region_id"`
-	// Name The project name
-	Name string `json:"name"`
-	// Provisioner Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.
-	Provisioner string `json:"provisioner"`
-	// DefaultEndpointSettings A collection of settings for a Neon endpoint
-	DefaultEndpointSettings *DefaultEndpointSettings `json:"default_endpoint_settings,omitempty"`
-	// Settings Project-level settings, for example `quota`, `allowed_ips`, `enable_logical_replication`, and `maintenance_window`.
-	Settings *ProjectSettingsData `json:"settings,omitempty"`
-	// PgVersion The major Postgres version number. Supported versions are `14`, `15`, `16`, `17`, and `18`. `19` is rolling out and is accepted only in regions where it is enabled; requesting it elsewhere returns an error.
-	PgVersion int64 `json:"pg_version"`
-	// ProxyHost The proxy host for the project. This value combines the `region_id`, the `platform_id`, and the Neon domain (`neon.tech`).
-	ProxyHost string `json:"proxy_host"`
-	// BranchLogicalSizeLimit The logical size limit for a branch. The value is in MiB.
-	BranchLogicalSizeLimit int64 `json:"branch_logical_size_limit"`
-	// BranchLogicalSizeLimitBytes The logical size limit for a branch. The value is in B.
-	BranchLogicalSizeLimitBytes int64 `json:"branch_logical_size_limit_bytes"`
-	// StorePasswords Whether or not passwords are stored for roles in the Neon project. Storing passwords facilitates access to Neon features that require authorization.
-	StorePasswords bool `json:"store_passwords"`
-	// ActiveTime Control plane observed endpoints of this project being active this amount of wall-clock time.
-	ActiveTime int64 `json:"active_time"`
-	// CpuUsedSec Deprecated. Use `compute_time_seconds` from `GET /projects/{project_id}` instead.
-	CpuUsedSec int64 `json:"cpu_used_sec"`
-	// MaintenanceStartsAt A timestamp indicating when project maintenance begins. If set, the project is placed into maintenance mode at this time.
-	MaintenanceStartsAt *string `json:"maintenance_starts_at,omitempty"`
-	// CreationSource The project creation source
-	CreationSource string `json:"creation_source"`
-	// CreatedAt A timestamp indicating when the project was created
-	CreatedAt string `json:"created_at"`
-	// UpdatedAt A timestamp indicating when the project was last updated
-	UpdatedAt string `json:"updated_at"`
-	// SyntheticStorageSize Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead.
-	// The current space occupied by the project in Postgres storage, in bytes. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches in a project.
-	SyntheticStorageSize *int64 `json:"synthetic_storage_size,omitempty"`
-	// QuotaResetAt Deprecated. Use `consumption_period_end` from `GET /projects/{project_id}` instead. A timestamp indicating when the project quota resets.
-	QuotaResetAt *string `json:"quota_reset_at,omitempty"`
-	// OwnerId ID of the organization that owns the project.
-	OwnerId string `json:"owner_id"`
-	// ComputeLastActiveAt The most recent time when any endpoint of this project was active.
-	//
-	// Omitted when observed no activity for endpoints of this project.
-	ComputeLastActiveAt *string `json:"compute_last_active_at,omitempty"`
-	// OrgId ID of the organization that owns the project. Project permissions are granted to organization members as configured by the organization's admins, independent of which member created the project.
-	OrgId *string `json:"org_id,omitempty"`
-	// OrgName Name of the organization that owns the project.
-	OrgName *string `json:"org_name,omitempty"`
-	// HistoryRetentionSeconds The number of seconds to retain the shared history for all branches in this project.
-	HistoryRetentionSeconds *int64 `json:"history_retention_seconds,omitempty"`
-	// HipaaEnabledAt A timestamp indicating when HIPAA was enabled for this project
-	HipaaEnabledAt *string `json:"hipaa_enabled_at,omitempty"`
-	// DeletedAt A timestamp indicating when the project was deleted
-	DeletedAt *string `json:"deleted_at,omitempty"`
-	// RecoverableUntil A timestamp indicating the project will be recoverable until this date and time.
-	RecoverableUntil *string `json:"recoverable_until,omitempty"`
-	// EffectiveProjectPermission Optional `string` value serialized in the `effective_project_permission` wire field.
-	EffectiveProjectPermission *NullableValue[ProjectPermissionLevel] `json:"effective_project_permission,omitempty"`
-}
-
-func (value *ProjectListItem) UnmarshalJSON(data []byte) error {
-	type ProjectListItemAlias ProjectListItem
-	var decoded ProjectListItemAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = ProjectListItem(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"active_time", "id", "platform_id", "region_id", "name", "pg_version", "proxy_host", "branch_logical_size_limit", "branch_logical_size_limit_bytes", "provisioner", "store_passwords", "cpu_used_sec", "creation_source", "created_at", "updated_at", "owner_id"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"active_time", "id", "platform_id", "region_id", "name", "pg_version", "proxy_host", "branch_logical_size_limit", "branch_logical_size_limit_bytes", "provisioner", "store_passwords", "cpu_used_sec", "creation_source", "created_at", "updated_at", "owner_id"}); err != nil {
-		return err
-	}
-	if err := ValidatePattern("id", value.Id, "^[a-z0-9-]{1,60}$"); err != nil {
-		return err
-	}
-	if err := ValidateRange("pg_version", value.PgVersion, RangeOpts{Min: Ptr[float64](14), Max: Ptr[float64](19)}); err != nil {
-		return err
-	}
-	if err := ValidateRange("active_time", value.ActiveTime, RangeOpts{Min: Ptr[float64](0)}); err != nil {
-		return err
-	}
-	if value.MaintenanceStartsAt != nil {
-		if err := ValidateModelDateTime("maintenance_starts_at", *value.MaintenanceStartsAt); err != nil {
-			return err
-		}
-	}
-	if err := ValidateModelDateTime("created_at", value.CreatedAt); err != nil {
-		return err
-	}
-	if err := ValidateModelDateTime("updated_at", value.UpdatedAt); err != nil {
-		return err
-	}
-	if value.QuotaResetAt != nil {
-		if err := ValidateModelDateTime("quota_reset_at", *value.QuotaResetAt); err != nil {
-			return err
-		}
-	}
-	if value.ComputeLastActiveAt != nil {
-		if err := ValidateModelDateTime("compute_last_active_at", *value.ComputeLastActiveAt); err != nil {
-			return err
-		}
-	}
-	if value.OrgId != nil {
-		if err := ValidatePattern("org_id", *value.OrgId, "^[a-z0-9-]{1,60}$"); err != nil {
-			return err
-		}
-	}
-	if value.HipaaEnabledAt != nil {
-		if err := ValidateModelDateTime("hipaa_enabled_at", *value.HipaaEnabledAt); err != nil {
-			return err
-		}
-	}
-	if value.DeletedAt != nil {
-		if err := ValidateModelDateTime("deleted_at", *value.DeletedAt); err != nil {
-			return err
-		}
-	}
-	if value.RecoverableUntil != nil {
-		if err := ValidateModelDateTime("recoverable_until", *value.RecoverableUntil); err != nil {
-			return err
-		}
-	}
-	if raw, ok := rawFields["effective_project_permission"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.EffectiveProjectPermission = &NullableValue[ProjectPermissionLevel]{}
-	}
-	return nil
-}
-
-// NewProjectListItem returns a validated ProjectListItem built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewProjectListItem(fields ProjectListItem) (*ProjectListItem, error) {
-	return ConstructModel(fields)
-}
-
-// Project Typed representation of the `Project` API schema.
-type Project struct {
-	// DataStorageBytesHour Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead.
-	// Bytes-Hour. Project consumed that much Postgres storage hourly during the billing period. The value has some lag.
-	// The value is reset at the beginning of each billing period.
-	DataStorageBytesHour int64 `json:"data_storage_bytes_hour"`
-	// DataTransferBytes Bytes. Egress traffic from the Neon cloud to the client for given project over the billing period.
-	// Includes deleted endpoints. The value has some lag. The value is reset at the beginning of each billing period.
-	DataTransferBytes int64 `json:"data_transfer_bytes"`
-	// WrittenDataBytes Bytes. Amount of WAL that travelled through Postgres storage for given project across all branches.
-	// The value has some lag. The value is reset at the beginning of each billing period.
-	WrittenDataBytes int64 `json:"written_data_bytes"`
-	// ComputeTimeSeconds Seconds. The number of CPU seconds used by the project's compute endpoints, including compute endpoints that have been deleted.
-	// The value has some lag. The value is reset at the beginning of each billing period.
-	// Examples:
-	// 1. An endpoint that uses 1 CPU for 1 second is equal to `compute_time=1`.
-	// 2. An endpoint that uses 2 CPUs simultaneously for 1 second is equal to `compute_time=2`.
-	ComputeTimeSeconds int64 `json:"compute_time_seconds"`
-	// ActiveTimeSeconds Seconds. Control plane observed endpoints of this project being active this amount of wall-clock time.
-	// The value has some lag.
-	// The value is reset at the beginning of each billing period.
-	ActiveTimeSeconds int64 `json:"active_time_seconds"`
-	// CpuUsedSec Deprecated. Use `compute_time_seconds` instead.
-	CpuUsedSec int64 `json:"cpu_used_sec"`
-	// Id The Neon project ID. Use as the `project_id` path parameter in other endpoints.
-	Id string `json:"id"`
-	// PlatformId The cloud platform identifier. Currently, only AWS is supported, for which the identifier is `aws`.
-	PlatformId string `json:"platform_id"`
-	// RegionId Cloud region where the resource's Postgres compute and storage reside (for example, `aws-us-east-1`). Valid values are returned by `GET /regions`.
-	RegionId string `json:"region_id"`
-	// Name The project name
-	Name string `json:"name"`
-	// Provisioner Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.
-	Provisioner string `json:"provisioner"`
-	// DefaultEndpointSettings A collection of settings for a Neon endpoint
-	DefaultEndpointSettings *DefaultEndpointSettings `json:"default_endpoint_settings,omitempty"`
-	// Settings Project-level settings, for example `quota`, `allowed_ips`, `enable_logical_replication`, and `maintenance_window`.
-	Settings *ProjectSettingsData `json:"settings,omitempty"`
-	// PgVersion The major Postgres version number. Supported versions are `14`, `15`, `16`, `17`, and `18`. `19` is rolling out and is accepted only in regions where it is enabled; requesting it elsewhere returns an error.
-	PgVersion int64 `json:"pg_version"`
-	// ProxyHost The proxy host for the project. This value combines the `region_id`, the `platform_id`, and the Neon domain (`neon.tech`).
-	ProxyHost string `json:"proxy_host"`
-	// BranchLogicalSizeLimit The logical size limit for a branch. The value is in MiB.
-	BranchLogicalSizeLimit int64 `json:"branch_logical_size_limit"`
-	// BranchLogicalSizeLimitBytes The logical size limit for a branch. The value is in B.
-	BranchLogicalSizeLimitBytes int64 `json:"branch_logical_size_limit_bytes"`
-	// StorePasswords Whether or not passwords are stored for roles in the Neon project. Storing passwords facilitates access to Neon features that require authorization.
-	StorePasswords bool `json:"store_passwords"`
-	// MaintenanceStartsAt A timestamp indicating when project maintenance begins. If set, the project is placed into maintenance mode at this time.
-	MaintenanceStartsAt *string `json:"maintenance_starts_at,omitempty"`
-	// CreationSource The project creation source
-	CreationSource string `json:"creation_source"`
-	// HistoryRetentionSeconds The number of seconds to retain the shared history for all branches in this project.
-	HistoryRetentionSeconds int64 `json:"history_retention_seconds"`
-	// CreatedAt A timestamp indicating when the project was created
-	CreatedAt string `json:"created_at"`
-	// UpdatedAt A timestamp indicating when the project was last updated
-	UpdatedAt string `json:"updated_at"`
-	// SyntheticStorageSize Deprecated: always returns 0. Use the consumption history v2 endpoints (`/consumption_history/v2/projects`, `/consumption_history/v2/branches`) instead.
-	// The current space occupied by the project in Postgres storage, in bytes. Synthetic Postgres storage size combines the logical data size and Write-Ahead Log (WAL) size for all branches in a project.
-	SyntheticStorageSize *int64 `json:"synthetic_storage_size,omitempty"`
-	// ConsumptionPeriodStart A date-time indicating when Neon Cloud started measuring consumption for current consumption period.
-	ConsumptionPeriodStart string `json:"consumption_period_start"`
-	// ConsumptionPeriodEnd A date-time indicating when Neon Cloud plans to stop measuring consumption for current consumption period.
-	ConsumptionPeriodEnd string `json:"consumption_period_end"`
-	// QuotaResetAt Deprecated. Use the `consumption_period_end` field instead. A timestamp indicating when the project quota resets.
-	QuotaResetAt *string `json:"quota_reset_at,omitempty"`
-	// OwnerId ID of the organization that owns the project.
-	OwnerId string `json:"owner_id"`
-	// Owner Ownership details for the project, including the owner's name and email.
-	Owner *ProjectOwnerData `json:"owner,omitempty"`
-	// ComputeLastActiveAt The most recent time when any endpoint of this project was active.
-	//
-	// Omitted when observed no activity for endpoints of this project.
-	ComputeLastActiveAt *string `json:"compute_last_active_at,omitempty"`
-	// OrgId The Neon organization ID. Returned as `id` from `GET /users/me/organizations`.
-	OrgId *string `json:"org_id,omitempty"`
-	// MaintenanceScheduledFor A timestamp indicating when project update begins. If set, computes might experience a brief restart around this time.
-	MaintenanceScheduledFor *string `json:"maintenance_scheduled_for,omitempty"`
-	// HipaaEnabledAt A timestamp indicating when HIPAA was enabled for this project
-	HipaaEnabledAt *string `json:"hipaa_enabled_at,omitempty"`
-	// EffectiveProjectPermission Optional `string` value serialized in the `effective_project_permission` wire field.
-	EffectiveProjectPermission *NullableValue[ProjectPermissionLevel] `json:"effective_project_permission,omitempty"`
-}
-
-func (value *Project) UnmarshalJSON(data []byte) error {
-	type ProjectAlias Project
-	var decoded ProjectAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = Project(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"consumption_period_end", "consumption_period_start", "active_time_seconds", "compute_time_seconds", "written_data_bytes", "data_transfer_bytes", "data_storage_bytes_hour", "id", "platform_id", "region_id", "name", "pg_version", "proxy_host", "branch_logical_size_limit", "branch_logical_size_limit_bytes", "store_passwords", "cpu_used_sec", "provisioner", "creation_source", "history_retention_seconds", "created_at", "updated_at", "owner_id"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"consumption_period_end", "consumption_period_start", "active_time_seconds", "compute_time_seconds", "written_data_bytes", "data_transfer_bytes", "data_storage_bytes_hour", "id", "platform_id", "region_id", "name", "pg_version", "proxy_host", "branch_logical_size_limit", "branch_logical_size_limit_bytes", "store_passwords", "cpu_used_sec", "provisioner", "creation_source", "history_retention_seconds", "created_at", "updated_at", "owner_id"}); err != nil {
-		return err
-	}
-	if err := ValidateRange("data_storage_bytes_hour", value.DataStorageBytesHour, RangeOpts{Min: Ptr[float64](0)}); err != nil {
-		return err
-	}
-	if err := ValidateRange("data_transfer_bytes", value.DataTransferBytes, RangeOpts{Min: Ptr[float64](0)}); err != nil {
-		return err
-	}
-	if err := ValidateRange("written_data_bytes", value.WrittenDataBytes, RangeOpts{Min: Ptr[float64](0)}); err != nil {
-		return err
-	}
-	if err := ValidateRange("compute_time_seconds", value.ComputeTimeSeconds, RangeOpts{Min: Ptr[float64](0)}); err != nil {
-		return err
-	}
-	if err := ValidateRange("active_time_seconds", value.ActiveTimeSeconds, RangeOpts{Min: Ptr[float64](0)}); err != nil {
-		return err
-	}
-	if err := ValidatePattern("id", value.Id, "^[a-z0-9-]{1,60}$"); err != nil {
-		return err
-	}
-	if err := ValidateRange("pg_version", value.PgVersion, RangeOpts{Min: Ptr[float64](14), Max: Ptr[float64](19)}); err != nil {
-		return err
-	}
-	if value.MaintenanceStartsAt != nil {
-		if err := ValidateModelDateTime("maintenance_starts_at", *value.MaintenanceStartsAt); err != nil {
-			return err
-		}
-	}
-	if err := ValidateModelDateTime("created_at", value.CreatedAt); err != nil {
-		return err
-	}
-	if err := ValidateModelDateTime("updated_at", value.UpdatedAt); err != nil {
-		return err
-	}
-	if err := ValidateModelDateTime("consumption_period_start", value.ConsumptionPeriodStart); err != nil {
-		return err
-	}
-	if err := ValidateModelDateTime("consumption_period_end", value.ConsumptionPeriodEnd); err != nil {
-		return err
-	}
-	if value.QuotaResetAt != nil {
-		if err := ValidateModelDateTime("quota_reset_at", *value.QuotaResetAt); err != nil {
-			return err
-		}
-	}
-	if value.ComputeLastActiveAt != nil {
-		if err := ValidateModelDateTime("compute_last_active_at", *value.ComputeLastActiveAt); err != nil {
-			return err
-		}
-	}
-	if value.OrgId != nil {
-		if err := ValidatePattern("org_id", *value.OrgId, "^[a-z0-9-]{1,60}$"); err != nil {
-			return err
-		}
-	}
-	if value.MaintenanceScheduledFor != nil {
-		if err := ValidateModelDateTime("maintenance_scheduled_for", *value.MaintenanceScheduledFor); err != nil {
-			return err
-		}
-	}
-	if value.HipaaEnabledAt != nil {
-		if err := ValidateModelDateTime("hipaa_enabled_at", *value.HipaaEnabledAt); err != nil {
-			return err
-		}
-	}
-	if raw, ok := rawFields["effective_project_permission"]; ok && bytes.Equal(bytes.TrimSpace(raw), []byte("null")) {
-		value.EffectiveProjectPermission = &NullableValue[ProjectPermissionLevel]{}
-	}
-	return nil
-}
-
-// NewProject returns a validated Project built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewProject(fields Project) (*Project, error) {
-	return ConstructModel(fields)
-}
-
-// ProjectCreateRequest Typed representation of the `ProjectCreateRequest` API schema.
-type ProjectCreateRequest struct {
-	// Project Configuration for the new project, including name, region, and Postgres compute and storage settings.
-	Project ProjectCreateRequestProject `json:"project"`
-}
-
-func (value *ProjectCreateRequest) UnmarshalJSON(data []byte) error {
-	type ProjectCreateRequestAlias ProjectCreateRequest
-	var decoded ProjectCreateRequestAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = ProjectCreateRequest(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"project"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"project"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewProjectCreateRequest returns a validated ProjectCreateRequest built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewProjectCreateRequest(fields ProjectCreateRequest) (*ProjectCreateRequest, error) {
-	return ConstructModel(fields)
-}
-
-// ProjectCreateRequestProject Configuration for the new project, including name, region, and Postgres compute and storage settings.
-type ProjectCreateRequestProject struct {
-	// Settings Project-level settings applied at creation.
-	Settings *ProjectSettingsData `json:"settings,omitempty"`
-	// Name The project name. If not specified, the name will be identical to the generated project ID
-	Name *string `json:"name,omitempty"`
-	// Realtime Enable Realtime for the default branch with these options.
-	Realtime *RealtimeOptions `json:"realtime,omitempty"`
-	// Branch Configuration for the initial branch created with the project.
-	Branch *ProjectCreateRequestProjectBranch `json:"branch,omitempty"`
-	// AutoscalingLimitMinCu Deprecated. Use `default_endpoint_settings.autoscaling_limit_min_cu` instead.
-	//
-	// The minimum number of Compute Units. The minimum value is `0.25`.
-	// See [Compute size and Autoscaling configuration](https://neon.com/docs/manage/endpoints#compute-size-and-autoscaling-configuration)
-	// for more information.
+// DefaultEndpointSettings A collection of settings for a Neon endpoint
+type DefaultEndpointSettings struct {
+	// PgSettings A raw representation of Postgres settings
+	PgSettings *PgSettingsData `json:"pg_settings,omitempty"`
+	// PgbouncerSettings Deprecated. Use the endpoint-level connection pooler configuration instead. Removal scheduled for June 20, 2026.
+	PgbouncerSettings *PgbouncerSettingsData `json:"pgbouncer_settings,omitempty"`
+	// AutoscalingLimitMinCu Minimum number of Compute Units for this endpoint. At least 0.25 and no greater than `autoscaling_limit_max_cu`.
 	AutoscalingLimitMinCu *float64 `json:"autoscaling_limit_min_cu,omitempty"`
-	// AutoscalingLimitMaxCu Deprecated. Use `default_endpoint_settings.autoscaling_limit_max_cu` instead.
-	//
-	// The maximum number of Compute Units. See [Compute size and Autoscaling configuration](https://neon.com/docs/manage/endpoints#compute-size-and-autoscaling-configuration)
-	// for more information.
+	// AutoscalingLimitMaxCu Default maximum number of Compute Units for endpoints created under this account. At least 0.25.
 	AutoscalingLimitMaxCu *float64 `json:"autoscaling_limit_max_cu,omitempty"`
-	// Provisioner Compute provisioner. `k8s-neonvm` (default) supports Autoscaling; `k8s-pod` is fixed-size compute. Also `docker` and `serverless-platform`.
-	Provisioner *string `json:"provisioner,omitempty"`
-	// RegionId The region identifier. Refer to our [Regions](https://neon.com/docs/introduction/regions) documentation for supported regions. Values are specified in this format: `aws-us-east-1`
-	RegionId *string `json:"region_id,omitempty"`
-	// DefaultEndpointSettings A collection of settings for a Neon endpoint
-	DefaultEndpointSettings *DefaultEndpointSettings `json:"default_endpoint_settings,omitempty"`
-	// PgVersion The major Postgres version number. Supported versions are `14`, `15`, `16`, `17`, and `18`. `19` is rolling out and is accepted only in regions where it is enabled; requesting it elsewhere returns an error.
-	PgVersion *int64 `json:"pg_version,omitempty"`
-	// StorePasswords Whether or not passwords are stored for roles in the Neon project. Storing passwords facilitates access to Neon features that require authorization.
-	StorePasswords *bool `json:"store_passwords,omitempty"`
-	// HistoryRetentionSeconds History window (point-in-time restore range) for all branches, in seconds. `0` disables it. Default 1 day (Free: 6 hours). Maximum depends on plan: Free 6 hours (21600), Launch 7 days (604800), Scale 30 days (2592000).
-	HistoryRetentionSeconds *int64 `json:"history_retention_seconds,omitempty"`
-	// OrgId ID of the organization that will own the project. If omitted when using an organization API key, it is inferred from the key.
-	OrgId *string `json:"org_id,omitempty"`
+	// SuspendTimeoutSeconds Scale-to-zero idle timeout, in seconds, before the compute suspends. `0` uses the plan default; `-1` disables scale-to-zero (never suspends). Minimum is plan-dependent (Scale: 60); maximum 604800 (one week). Free cannot change it; Launch can only enable or disable; Scale can set any value.
+	SuspendTimeoutSeconds *int64 `json:"suspend_timeout_seconds,omitempty"`
 }
 
-func (value *ProjectCreateRequestProject) UnmarshalJSON(data []byte) error {
-	type ProjectCreateRequestProjectAlias ProjectCreateRequestProject
-	var decoded ProjectCreateRequestProjectAlias
+func (value *DefaultEndpointSettings) UnmarshalJSON(data []byte) error {
+	type DefaultEndpointSettingsAlias DefaultEndpointSettings
+	var decoded DefaultEndpointSettingsAlias
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		return err
 	}
-	*value = ProjectCreateRequestProject(decoded)
+	*value = DefaultEndpointSettings(decoded)
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
 		return err
-	}
-	if value.Name != nil {
-		if err := ValidateLength("name", *value.Name, LengthOpts{Min: Ptr[int](1), Max: Ptr[int](256)}); err != nil {
-			return err
-		}
 	}
 	if value.AutoscalingLimitMinCu != nil {
 		if err := ValidateRange("autoscaling_limit_min_cu", *value.AutoscalingLimitMinCu, RangeOpts{Min: Ptr[float64](0.25)}); err != nil {
@@ -643,71 +423,145 @@ func (value *ProjectCreateRequestProject) UnmarshalJSON(data []byte) error {
 			return err
 		}
 	}
-	if value.PgVersion != nil {
-		if err := ValidateRange("pg_version", *value.PgVersion, RangeOpts{Min: Ptr[float64](14), Max: Ptr[float64](19)}); err != nil {
-			return err
-		}
-	}
-	if value.HistoryRetentionSeconds != nil {
-		if err := ValidateRange("history_retention_seconds", *value.HistoryRetentionSeconds, RangeOpts{Min: Ptr[float64](0), Max: Ptr[float64](2592000)}); err != nil {
-			return err
-		}
-	}
-	if value.OrgId != nil {
-		if err := ValidatePattern("org_id", *value.OrgId, "^[a-z0-9-]{1,60}$"); err != nil {
+	if value.SuspendTimeoutSeconds != nil {
+		if err := ValidateRange("suspend_timeout_seconds", *value.SuspendTimeoutSeconds, RangeOpts{Min: Ptr[float64](-1), Max: Ptr[float64](604800)}); err != nil {
 			return err
 		}
 	}
 	return nil
 }
 
-// NewProjectCreateRequestProject returns a validated ProjectCreateRequestProject built from named fields.
+// NewDefaultEndpointSettings returns a validated DefaultEndpointSettings built from named fields.
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
-func NewProjectCreateRequestProject(fields ProjectCreateRequestProject) (*ProjectCreateRequestProject, error) {
+func NewDefaultEndpointSettings(fields DefaultEndpointSettings) (*DefaultEndpointSettings, error) {
 	return ConstructModel(fields)
 }
 
-// ProjectCreateRequestProjectBranch Configuration for the initial branch created with the project.
-type ProjectCreateRequestProjectBranch struct {
-	// Name The default branch name. If not specified, the default branch name, `main`, will be used.
-	Name *string `json:"name,omitempty"`
-	// RoleName The role name. If not specified, the default role name, `{database_name}_owner`, will be used.
-	RoleName *string `json:"role_name,omitempty"`
-	// DatabaseName The database name. If not specified, the default database name, `neondb`, will be used.
-	DatabaseName *string `json:"database_name,omitempty"`
-	// Annotations Arbitrary key-value metadata to attach to the branch.
-	Annotations *AnnotationValueData `json:"annotations,omitempty"`
+// PgVersion is an alias for int64.
+type PgVersion = int64
+
+// JWKSCreationOperation Typed representation of the `JWKSCreationOperation` API schema.
+type JWKSCreationOperation struct {
+	// Jwks JWKS configuration associated with the project.
+	Jwks JWKS `json:"jwks"`
+	// Operations Required array value serialized in the `operations` wire field.
+	Operations []Operation `json:"operations"`
 }
 
-func (value *ProjectCreateRequestProjectBranch) UnmarshalJSON(data []byte) error {
-	type ProjectCreateRequestProjectBranchAlias ProjectCreateRequestProjectBranch
-	var decoded ProjectCreateRequestProjectBranchAlias
+func (value *JWKSCreationOperation) UnmarshalJSON(data []byte) error {
+	type JWKSCreationOperationAlias JWKSCreationOperation
+	var decoded JWKSCreationOperationAlias
 	if err := json.Unmarshal(data, &decoded); err != nil {
 		return err
 	}
-	*value = ProjectCreateRequestProjectBranch(decoded)
+	*value = JWKSCreationOperation(decoded)
 	var rawFields map[string]json.RawMessage
 	if err := json.Unmarshal(data, &rawFields); err != nil {
 		return err
 	}
-	if value.Name != nil {
-		if err := ValidateLength("name", *value.Name, LengthOpts{Min: Ptr[int](1), Max: Ptr[int](256)}); err != nil {
-			return err
-		}
+	if err := ValidateRequired(rawFields, []string{"jwks", "operations"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"jwks", "operations"}); err != nil {
+		return err
 	}
 	return nil
 }
 
-// NewProjectCreateRequestProjectBranch returns a validated ProjectCreateRequestProjectBranch built from named fields.
+// NewJWKSCreationOperation returns a validated JWKSCreationOperation built from named fields.
 // Optional fields may be left unset; a value that violates the schema is
 // reported as *SdkValidationError.
-func NewProjectCreateRequestProjectBranch(fields ProjectCreateRequestProjectBranch) (*ProjectCreateRequestProjectBranch, error) {
+func NewJWKSCreationOperation(fields JWKSCreationOperation) (*JWKSCreationOperation, error) {
 	return ConstructModel(fields)
 }
 
-// ProjectUpdateRequest Typed representation of the `ProjectUpdateRequest` API schema.
-type ProjectUpdateRequest struct {
-	// Project Required object value serialized in the `project` wire field.
-	Project ProjectUpdateRequestProject `json:"project"`
+// ApplicationType Type of application integration
+type ApplicationType string
+
+const (
+	ApplicationTypeVercel        ApplicationType = "vercel"
+	ApplicationTypeGithub        ApplicationType = "github"
+	ApplicationTypeDatadog       ApplicationType = "datadog"
+	ApplicationTypeOpentelemetry ApplicationType = "opentelemetry"
+)
+
+// CreateProjectResponse Typed representation of the `CreateProjectResponse` API schema.
+type CreateProjectResponse struct {
+	// Project Full details of the project, including configuration, consumption metrics, and ownership.
+	Project Project `json:"project"`
+	// ConnectionUris Connection URIs for the project. Each entry contains credentials and should be treated as sensitive.
+	ConnectionUris []ConnectionDetails `json:"connection_uris"`
+	// Roles Roles belonging to the branch. Each role includes fields such as `branch_id`, `name`, `protected`, `created_at`, and `updated_at`.
+	Roles []Role `json:"roles"`
+	// Databases Databases on the branch. Each includes `id`, `name`, `owner_name`, and `created_at`.
+	Databases []Database `json:"databases"`
+	// Operations Required array value serialized in the `operations` wire field.
+	Operations []Operation `json:"operations"`
+	// Branch Branch returned by the request.
+	Branch Branch `json:"branch"`
+	// Endpoints Compute endpoints in the project. Each includes `id`, `branch_id`, `host`, and `type`.
+	Endpoints []Endpoint `json:"endpoints"`
+}
+
+func (value *CreateProjectResponse) UnmarshalJSON(data []byte) error {
+	type CreateProjectResponseAlias CreateProjectResponse
+	var decoded CreateProjectResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = CreateProjectResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"project", "connection_uris", "roles", "databases", "operations", "branch", "endpoints"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"project", "connection_uris", "roles", "databases", "operations", "branch", "endpoints"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewCreateProjectResponse returns a validated CreateProjectResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewCreateProjectResponse(fields CreateProjectResponse) (*CreateProjectResponse, error) {
+	return ConstructModel(fields)
+}
+
+// UpdateProjectResponse Typed representation of the `UpdateProjectResponse` API schema.
+type UpdateProjectResponse struct {
+	// Project Full details of the project, including configuration, consumption metrics, and ownership.
+	Project Project `json:"project"`
+	// Operations Required array value serialized in the `operations` wire field.
+	Operations []Operation `json:"operations"`
+}
+
+func (value *UpdateProjectResponse) UnmarshalJSON(data []byte) error {
+	type UpdateProjectResponseAlias UpdateProjectResponse
+	var decoded UpdateProjectResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = UpdateProjectResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"project", "operations"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"project", "operations"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewUpdateProjectResponse returns a validated UpdateProjectResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewUpdateProjectResponse(fields UpdateProjectResponse) (*UpdateProjectResponse, error) {
+	return ConstructModel(fields)
 }

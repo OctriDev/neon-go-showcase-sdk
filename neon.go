@@ -49,7 +49,7 @@ func (sdk *ProjectNamespace) GetAdvisorSecurityIssues(ctx context.Context, param
 //	implicit implementation defined timeout is chosen with the same behaviour as
 //	above
 //	recoverable: Show only deleted projects within the recovery window.
-func (sdk *ProjectNamespace) List(ctx context.Context, params ListProjectsParams, opts ...RequestOption) (any, error) {
+func (sdk *ProjectNamespace) List(ctx context.Context, params ListProjectsParams, opts ...RequestOption) (*ListProjectsResponse, error) {
 	return ListProjects(ctx, sdk.config, params, opts...)
 }
 
@@ -59,7 +59,7 @@ func (sdk *ProjectNamespace) List(ctx context.Context, params ListProjectsParams
 //
 //	project: Configuration for the new project, including name, region, and
 //	Postgres compute and storage settings.
-func (sdk *ProjectNamespace) Create(ctx context.Context, params CreateProjectParams, opts ...RequestOption) (any, error) {
+func (sdk *ProjectNamespace) Create(ctx context.Context, params CreateProjectParams, opts ...RequestOption) (*CreateProjectResponse, error) {
 	return CreateProject(ctx, sdk.config, params, opts...)
 }
 
@@ -78,7 +78,7 @@ func (sdk *ProjectNamespace) Create(ctx context.Context, params CreateProjectPar
 //	listed in the "unavailable" attribute of the response. If not specified, an
 //	implicit implementation defined timeout is chosen with the same behaviour as
 //	above
-func (sdk *ProjectNamespace) ListShared(ctx context.Context, params ListSharedProjectsParams, opts ...RequestOption) (any, error) {
+func (sdk *ProjectNamespace) ListShared(ctx context.Context, params ListSharedProjectsParams, opts ...RequestOption) (*ListSharedProjectsResponse, error) {
 	return ListSharedProjects(ctx, sdk.config, params, opts...)
 }
 
@@ -99,7 +99,7 @@ func (sdk *ProjectNamespace) Get(ctx context.Context, params GetProjectParams, o
 //
 //	projectId: The Neon project ID
 //	project: Required object value serialized in the `project` wire field.
-func (sdk *ProjectNamespace) Update(ctx context.Context, params UpdateProjectParams, opts ...RequestOption) (any, error) {
+func (sdk *ProjectNamespace) Update(ctx context.Context, params UpdateProjectParams, opts ...RequestOption) (*UpdateProjectResponse, error) {
 	return UpdateProject(ctx, sdk.config, params, opts...)
 }
 
@@ -361,7 +361,7 @@ func (sdk *OperationNamespace) Get(ctx context.Context, params GetOperationParam
 //	batch of operations
 //	limit: Specify a value from 1 to 1000 to limit number of operations in the
 //	response
-func (sdk *OperationNamespace) List(ctx context.Context, params ListOperationParams, opts ...RequestOption) (any, error) {
+func (sdk *OperationNamespace) List(ctx context.Context, params ListOperationParams, opts ...RequestOption) (*ListOperationResponse, error) {
 	return ListOperation(ctx, sdk.config, params, opts...)
 }
 
