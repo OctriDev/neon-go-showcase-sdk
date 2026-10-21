@@ -408,8 +408,8 @@ func sdkMethodByName(name string) any {
 		return UpdateEndpoint
 	case "UpdateFunctions":
 		return UpdateFunctions
-	case "UpdateFunctionsTrigger":
-		return UpdateFunctionsTrigger
+	case "UpdateFunctionTrigger":
+		return UpdateFunctionTrigger
 	case "UpdateMaskingRules":
 		return UpdateMaskingRules
 	case "UpdateOrganizationMember":

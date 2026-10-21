@@ -398,14 +398,14 @@ func GetFunctionsTrigger(ctx context.Context, clientConfig ClientConfig, params 
 	return &resp.Data, nil
 }
 
-type UpdateFunctionsTriggerParams struct {
+type UpdateFunctionTriggerParams struct {
 	ProjectId string
 	BranchId  string
 	TriggerId string
 	Body      TriggerUpdateRequest
 }
 
-// UpdateFunctionsTrigger updates a branch trigger using a partial configuration. Set `type` to the existing trigger kind and provide at least one other field to change; supported kinds are `schedule` and `storage_object_created`. Editing an inherited trigger creates a child-local shadow that remains disabled unless you explicitly enable it; disabling a trigger does not cancel occurrences already committed for delivery.
+// UpdateFunctionTrigger updates a branch trigger using a partial configuration. Set `type` to the existing trigger kind and provide at least one other field to change; supported kinds are `schedule` and `storage_object_created`. Editing an inherited trigger creates a child-local shadow that remains disabled unless you explicitly enable it; disabling a trigger does not cancel occurrences already committed for delivery.
 //
 // Applies a partial update. The required `type` discriminator must identify the existing trigger kind. The supported types are `schedule` and `storage_object_created`. Editing an inherited trigger creates a child-local shadow with the same `trigger_id`; it remains disabled unless this request explicitly enables it. For a schedule trigger, updating the schedule or enabled state increments `version` and recomputes `next_run_at`. Disabling stops future scheduling but does not cancel occurrences already committed for delivery. For `storage_object_created`, the configuration selects one exact bucket. An omitted object-key prefix matches every key in that bucket; a present prefix is matched byte-for-byte and case-sensitively against the full key, without path normalization or a path-segment boundary. **Note**: This endpoint is currently in Beta.
 //
@@ -414,7 +414,7 @@ type UpdateFunctionsTriggerParams struct {
 //	projectId: The Neon project ID
 //	branchId: The Neon branch ID
 //	triggerId: The opaque, project-wide trigger ID
-func UpdateFunctionsTrigger(ctx context.Context, clientConfig ClientConfig, params UpdateFunctionsTriggerParams, opts ...RequestOption) (*TriggerResponse, error) {
+func UpdateFunctionTrigger(ctx context.Context, clientConfig ClientConfig, params UpdateFunctionTriggerParams, opts ...RequestOption) (*TriggerResponse, error) {
 	projectId := params.ProjectId
 	branchId := params.BranchId
 	triggerId := params.TriggerId
@@ -437,7 +437,7 @@ func UpdateFunctionsTrigger(ctx context.Context, clientConfig ClientConfig, para
 
 	resp, err := DoCfg[TriggerResponse](ctx, &clientConfig, "PATCH", fmt.Sprintf("/projects/%s/branches/%s/triggers/%s", EncodePathSegment(projectId), EncodePathSegment(branchId), EncodePathSegment(triggerId)), &RequestOpts{
 		Body:        body,
-		OperationID: "UpdateFunctionsTrigger",
+		OperationID: "UpdateFunctionTrigger",
 		Errors:      ErrorDecoders{"default": decodeErrorData[GeneralError]},
 		Options:     opts,
 	})
