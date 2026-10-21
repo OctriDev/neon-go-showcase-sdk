@@ -646,8 +646,8 @@ func (sdk *FunctionsNamespace) GetTrigger(ctx context.Context, params GetFunctio
 //	projectId: The Neon project ID
 //	branchId: The Neon branch ID
 //	triggerId: The opaque, project-wide trigger ID
-func (sdk *FunctionsNamespace) UpdateTrigger(ctx context.Context, params UpdateFunctionsTriggerParams, opts ...RequestOption) (*TriggerResponse, error) {
-	return UpdateFunctionsTrigger(ctx, sdk.config, params, opts...)
+func (sdk *FunctionsNamespace) UpdateTrigger(ctx context.Context, params UpdateFunctionTriggerParams, opts ...RequestOption) (*TriggerResponse, error) {
+	return UpdateFunctionTrigger(ctx, sdk.config, params, opts...)
 }
 
 // DeleteTrigger deletes a branch-local trigger or writes a branch-local tombstone for an inherited trigger so it does not reappear. Deletion stops future scheduling or storage-event matching but does not cancel invocations already committed for delivery. The supported trigger types are `schedule` and `storage_object_created`. **Note**: This endpoint is currently in Beta.

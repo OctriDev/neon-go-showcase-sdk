@@ -9,100 +9,6 @@ import (
 	"fmt"
 )
 
-type CreateSnapshotResponse struct {
-	Snapshot   Snapshot    `json:"snapshot"`
-	Operations []Operation `json:"operations"`
-}
-
-func (value *CreateSnapshotResponse) UnmarshalJSON(data []byte) error {
-	type CreateSnapshotResponseAlias CreateSnapshotResponse
-	var decoded CreateSnapshotResponseAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = CreateSnapshotResponse(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"snapshot", "operations"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"snapshot", "operations"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewCreateSnapshotResponse returns a validated CreateSnapshotResponse built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewCreateSnapshotResponse(fields CreateSnapshotResponse) (*CreateSnapshotResponse, error) {
-	return ConstructModel(fields)
-}
-
-type ListSnapshotsResponse struct {
-	Snapshots []Snapshot `json:"snapshots"`
-}
-
-func (value *ListSnapshotsResponse) UnmarshalJSON(data []byte) error {
-	type ListSnapshotsResponseAlias ListSnapshotsResponse
-	var decoded ListSnapshotsResponseAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = ListSnapshotsResponse(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"snapshots"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"snapshots"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewListSnapshotsResponse returns a validated ListSnapshotsResponse built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewListSnapshotsResponse(fields ListSnapshotsResponse) (*ListSnapshotsResponse, error) {
-	return ConstructModel(fields)
-}
-
-type UpdateSnapshotResponse struct {
-	Snapshot Snapshot `json:"snapshot"`
-}
-
-func (value *UpdateSnapshotResponse) UnmarshalJSON(data []byte) error {
-	type UpdateSnapshotResponseAlias UpdateSnapshotResponse
-	var decoded UpdateSnapshotResponseAlias
-	if err := json.Unmarshal(data, &decoded); err != nil {
-		return err
-	}
-	*value = UpdateSnapshotResponse(decoded)
-	var rawFields map[string]json.RawMessage
-	if err := json.Unmarshal(data, &rawFields); err != nil {
-		return err
-	}
-	if err := ValidateRequired(rawFields, []string{"snapshot"}); err != nil {
-		return err
-	}
-	if err := ValidateNotNull(rawFields, []string{"snapshot"}); err != nil {
-		return err
-	}
-	return nil
-}
-
-// NewUpdateSnapshotResponse returns a validated UpdateSnapshotResponse built from named fields.
-// Optional fields may be left unset; a value that violates the schema is
-// reported as *SdkValidationError.
-func NewUpdateSnapshotResponse(fields UpdateSnapshotResponse) (*UpdateSnapshotResponse, error) {
-	return ConstructModel(fields)
-}
-
 type CreateSnapshotParams struct {
 	ProjectId string
 	BranchId  string
@@ -399,4 +305,98 @@ func SetSnapshotSchedule(ctx context.Context, clientConfig ClientConfig, params 
 		return nil, err
 	}
 	return &resp.Data, nil
+}
+
+type CreateSnapshotResponse struct {
+	Snapshot   Snapshot    `json:"snapshot"`
+	Operations []Operation `json:"operations"`
+}
+
+func (value *CreateSnapshotResponse) UnmarshalJSON(data []byte) error {
+	type CreateSnapshotResponseAlias CreateSnapshotResponse
+	var decoded CreateSnapshotResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = CreateSnapshotResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"snapshot", "operations"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"snapshot", "operations"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewCreateSnapshotResponse returns a validated CreateSnapshotResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewCreateSnapshotResponse(fields CreateSnapshotResponse) (*CreateSnapshotResponse, error) {
+	return ConstructModel(fields)
+}
+
+type ListSnapshotsResponse struct {
+	Snapshots []Snapshot `json:"snapshots"`
+}
+
+func (value *ListSnapshotsResponse) UnmarshalJSON(data []byte) error {
+	type ListSnapshotsResponseAlias ListSnapshotsResponse
+	var decoded ListSnapshotsResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = ListSnapshotsResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"snapshots"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"snapshots"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewListSnapshotsResponse returns a validated ListSnapshotsResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewListSnapshotsResponse(fields ListSnapshotsResponse) (*ListSnapshotsResponse, error) {
+	return ConstructModel(fields)
+}
+
+type UpdateSnapshotResponse struct {
+	Snapshot Snapshot `json:"snapshot"`
+}
+
+func (value *UpdateSnapshotResponse) UnmarshalJSON(data []byte) error {
+	type UpdateSnapshotResponseAlias UpdateSnapshotResponse
+	var decoded UpdateSnapshotResponseAlias
+	if err := json.Unmarshal(data, &decoded); err != nil {
+		return err
+	}
+	*value = UpdateSnapshotResponse(decoded)
+	var rawFields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &rawFields); err != nil {
+		return err
+	}
+	if err := ValidateRequired(rawFields, []string{"snapshot"}); err != nil {
+		return err
+	}
+	if err := ValidateNotNull(rawFields, []string{"snapshot"}); err != nil {
+		return err
+	}
+	return nil
+}
+
+// NewUpdateSnapshotResponse returns a validated UpdateSnapshotResponse built from named fields.
+// Optional fields may be left unset; a value that violates the schema is
+// reported as *SdkValidationError.
+func NewUpdateSnapshotResponse(fields UpdateSnapshotResponse) (*UpdateSnapshotResponse, error) {
+	return ConstructModel(fields)
 }
